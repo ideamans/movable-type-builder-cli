@@ -1,0 +1,673 @@
+# テンプレートタグ索引
+
+現行 614 件 / 非推奨 82 件。
+
+**タグ名から、属性とマニュアルへのリンクが載っているファイルを引く表です。**
+説明は自前の1行の要約です。詳しい使い方はそのファイルからマニュアルへ。
+
+B=ブロックタグ / F=ファンクションタグ
+
+## `tags-entry.md`
+
+- MTBlogEntryCount (F) — サイトの公開済み記事の数
+- MTEntries (B) — 記事を並べるループ（件数・カテゴリ・タグ・並び順で絞れる）
+- MTEntriesCount (F) — いまの文脈で出る記事の数
+- MTEntriesFooter (B) — MTEntries の最後の1回だけ出す
+- MTEntriesHeader (B) — MTEntries の最初の1回だけ出す
+- MTEntriesWithSubCategories (B) — サブカテゴリの記事も含めて並べるループ
+- MTEntryAdditionalCategories (B) — 記事のメイン以外のカテゴリを並べるループ
+- MTEntryAssets (B) — 記事が使っているアセットを並べるループ
+- MTEntryAtomID (F) — 記事の Atom ID
+- MTEntryAuthorDisplayName (F) — 記事の作成者の表示名（未設定なら空）
+- MTEntryAuthorEmail (F) — 記事の作成者のメールアドレス
+- MTEntryAuthorID (F) — 記事・ページの作成者の ID
+- MTEntryAuthorLink (F) — 記事の作成者の表示名をリンク付きで（ウェブサイト URL へ）
+- MTEntryAuthorURL (F) — 記事の作成者のウェブサイト URL
+- MTEntryAuthorUsername (F) — 記事の作成者のユーザー名（公開ページでは表示名を推奨）
+- MTEntryAuthorUserpic (F) — 記事の作成者のプロフィール画像の img 要素
+- MTEntryAuthorUserpicAsset (B) — 記事の作成者のプロフィール画像をアセットとして文脈にする
+- MTEntryAuthorUserpicURL (F) — 記事の作成者のプロフィール画像の URL
+- MTEntryBasename (F) — 記事のベースネーム（出力ファイル名）
+- MTEntryBlogDescription (F) — 記事が属するサイトの説明
+- MTEntryBlogID (F) — 記事が属するサイトの ID
+- MTEntryBlogName (F) — 記事が属するサイトの名前
+- MTEntryBlogURL (F) — 記事が属するサイトの URL
+- MTEntryBody (F) — 記事の本文
+- MTEntryCategories (B) — 記事のカテゴリを並べるループ（メインを含む）
+- MTEntryCategory (F) — 記事のメインカテゴリの名前
+- MTEntryClass (F) — 記事かウェブページか（entry / page。言語に依らない）
+- MTEntryClassLabel (F) — 記事かウェブページかの表示名（言語に合わせる）
+- MTEntryCommentCount (F) — 記事のコメントの数
+- MTEntryCreatedDate (F) — 記事を作った日時（公開日ではない）
+- MTEntryCustomFieldDescription (F) — 記事のカスタムフィールドの説明
+- MTEntryCustomFieldName (F) — 記事のカスタムフィールドの名前
+- MTEntryCustomFieldValue (F) — 記事のカスタムフィールドの値
+- MTEntryCustomFields (B) — 記事のカスタムフィールドを並べるループ
+- MTEntryDate (F) — 記事の公開日時（format で書式指定）
+- MTEntryExcerpt (F) — 記事の概要（空なら本文の先頭）
+- MTEntryFlag (F) — 記事の項目の状態を 0/1 で（flag で項目を選ぶ）
+- MTEntryID (F) — 記事の ID（pad で桁を揃える）
+- MTEntryIfExtended (B) — 記事に続きがあれば中身を出す
+- MTEntryIfTagged (B) — 記事に（指定の）タグが付いていれば中身を出す
+- MTEntryKeywords (F) — 記事のキーワード
+- MTEntryLink (F) — 記事のアーカイブの絶対 URL（既定は個別アーカイブ）
+- MTEntryModifiedAuthorDisplayName (F) — 記事を最後に更新したユーザーの表示名
+- MTEntryModifiedAuthorEmail (F) — 記事を最後に更新したユーザーのメールアドレス
+- MTEntryModifiedAuthorID (F) — 記事・ページを最後に更新したユーザーの ID
+- MTEntryModifiedAuthorLink (F) — 記事を最後に更新したユーザーの表示名をリンク付きで
+- MTEntryModifiedAuthorURL (F) — 記事を最後に更新したユーザーのウェブサイト URL
+- MTEntryModifiedAuthorUsername (F) — 記事を最後に更新したユーザーのユーザー名
+- MTEntryModifiedAuthorUserpic (F) — 記事を最後に更新したユーザーのプロフィール画像の img 要素
+- MTEntryModifiedAuthorUserpicAsset (F) — 記事を最後に更新したユーザーのプロフィール画像をアセットとして文脈にする
+- MTEntryModifiedAuthorUserpicURL (F) — 記事を最後に更新したユーザーのプロフィール画像の URL
+- MTEntryModifiedDate (F) — 記事を最後に保存した日時（再構築の日時ではない）
+- MTEntryMore (F) — 記事の続き
+- MTEntryNext (B) — 次の記事を文脈にする
+- MTEntryPermalink (F) — 記事のパーマリンク（アーカイブの中の記事の位置まで）
+- MTEntryPrevious (B) — 前の記事を文脈にする
+- MTEntryPrimaryCategory (B) — 記事のメインカテゴリを文脈にする
+- MTEntryRank (F) — 記事のスコアから出した順位（要スコア用プラグイン）
+- MTEntryScore (F) — 記事のスコアの合計（要スコア用プラグイン）
+- MTEntryScoreAvg (F) — 記事のスコアの平均（要スコア用プラグイン）
+- MTEntryScoreCount (F) — 記事にスコアが付いた回数（要スコア用プラグイン）
+- MTEntryScoreHigh (F) — 記事のスコアの最高値（要スコア用プラグイン）
+- MTEntryScoreLow (F) — 記事のスコアの最低値（要スコア用プラグイン）
+- MTEntrySiteDescription (F) — 記事が属するサイトの説明（MTEntryBlogDescription と同じ）
+- MTEntrySiteID (F) — 記事が属するサイトの ID（MTEntryBlogID と同じ）
+- MTEntrySiteName (F) — 記事が属するサイトの名前（MTEntryBlogName と同じ）
+- MTEntrySiteURL (F) — 記事が属するサイトの URL（MTEntryBlogURL と同じ）
+- MTEntryStatus (F) — 記事の状態（Publish・Draft・Future など）
+- MTEntryTags (B) — 記事のタグを並べるループ（glue で区切り）
+- MTEntryTitle (F) — 記事のタイトル
+- MTEntryTrackbackCount (F) — 記事が受けたトラックバックの数
+- MTEntryTrackbackData (F) — トラックバック自動検知用の RDF（画面には出ない）
+- MTEntryTrackbackID (F) — 記事のトラックバック ID
+- MTEntryTrackbackLink (F) — 記事のトラックバック URL
+- MTEntryUnpublishedDate (F) — 記事の公開終了日時
+
+## `tags-page.md`
+
+- MTBlogPageCount (F) — サイトの公開済みウェブページの数
+- MTPageAssets (B) — ウェブページが使っているアセットを並べるループ
+- MTPageAuthorDisplayName (F) — ウェブページの作成者の表示名
+- MTPageAuthorEmail (F) — ウェブページの作成者のメールアドレス
+- MTPageAuthorLink (F) — ウェブページの作成者の表示名をリンク付きで
+- MTPageAuthorURL (F) — ウェブページの作成者のウェブサイト URL
+- MTPageBasename (F) — ウェブページのベースネーム（出力ファイル名）
+- MTPageBody (F) — ウェブページの本文
+- MTPageCustomFieldDescription (F) — ウェブページのカスタムフィールドの説明
+- MTPageCustomFieldName (F) — ウェブページのカスタムフィールドの名前
+- MTPageCustomFieldValue (F) — ウェブページのカスタムフィールドの値
+- MTPageCustomFields (B) — ウェブページのカスタムフィールドを並べるループ
+- MTPageDate (F) — ウェブページの公開日時（format で書式指定）
+- MTPageExcerpt (F) — ウェブページの概要（空なら本文の先頭）
+- MTPageFolder (B) — ウェブページのフォルダを文脈にする
+- MTPageID (F) — ウェブページの ID
+- MTPageIfTagged (B) — ウェブページに（指定の）タグが付いていれば中身を出す
+- MTPageKeywords (F) — ウェブページのキーワード
+- MTPageModifiedAuthorDisplayName (F) — ウェブページを最後に更新したユーザーの表示名
+- MTPageModifiedAuthorEmail (F) — ウェブページを最後に更新したユーザーのメールアドレス
+- MTPageModifiedAuthorLink (F) — ウェブページを最後に更新したユーザーの表示名をリンク付きで
+- MTPageModifiedAuthorURL (F) — ウェブページを最後に更新したユーザーのウェブサイト URL
+- MTPageModifiedDate (F) — ウェブページを最後に更新した日時
+- MTPageMore (F) — ウェブページの続き
+- MTPageNext (B) — 次のウェブページを文脈にする
+- MTPagePermalink (F) — ウェブページの絶対 URL
+- MTPagePrevious (B) — 前のウェブページを文脈にする
+- MTPageTags (B) — ウェブページのタグを並べるループ
+- MTPageTitle (F) — ウェブページのタイトル
+- MTPageUnpublishedDate (F) — ウェブページの公開終了日時
+- MTPagerBlock (B) — 検索結果のページ数だけ回すループ（ページ番号の並び）
+- MTPagerLink (F) — MTPagerBlock の中で、各ページの URL
+- MTPages (B) — ウェブページを並べるループ
+- MTPagesFooter (B) — MTPages の最後の1回だけ出す
+- MTPagesHeader (B) — MTPages の最初の1回だけ出す
+
+## `tags-content.md`
+
+- MTContentAuthorDisplayName (F) — コンテンツデータを作ったユーザーの表示名
+- MTContentAuthorEmail (F) — コンテンツデータを作ったユーザーのメールアドレス
+- MTContentAuthorID (F) — コンテンツデータを作ったユーザーの ID
+- MTContentAuthorLink (F) — コンテンツデータを作ったユーザーの表示名をリンク付きで
+- MTContentAuthorURL (F) — コンテンツデータを作ったユーザーのウェブサイト URL
+- MTContentAuthorUsername (F) — コンテンツデータを作ったユーザーのユーザー名
+- MTContentAuthorUserpic (F) — コンテンツデータを作ったユーザーのプロフィール画像の img 要素
+- MTContentAuthorUserpicAsset (B) — コンテンツデータを作ったユーザーのプロフィール画像をアセットとして文脈にする
+- MTContentAuthorUserpicURL (F) — コンテンツデータを作ったユーザーのプロフィール画像の URL
+- MTContentCalendar (B) — コンテンツデータ用の1か月分のカレンダーを組むループ
+- MTContentCreatedDate (F) — コンテンツデータを作った日時（公開日ではない）
+- MTContentDataSearchScript (F) — コンテンツデータ検索の CGI のファイル名
+- MTContentDate (F) — コンテンツデータの公開日時（format で書式指定）
+- MTContentField (B) — コンテンツデータの1つのフィールドを文脈にする（content_field で選ぶ）
+- MTContentFieldFooter (B) — MTContentField の値の最後の1回だけ出す
+- MTContentFieldHeader (B) — MTContentField の値の最初の1回だけ出す
+- MTContentFieldLabel (F) — コンテンツフィールドの名前
+- MTContentFieldValue (F) — いまのコンテンツフィールドの値
+- MTContentFields (B) — コンテンツタイプの全フィールドを並べるループ
+- MTContentFieldsFooter (B) — MTContentFields の最後の1回だけ出す
+- MTContentFieldsHeader (B) — MTContentFields の最初の1回だけ出す
+- MTContentID (F) — コンテンツデータの ID
+- MTContentIdentifier (F) — コンテンツデータのベースネーム（出力ファイル名）
+- MTContentLabel (F) — コンテンツデータのデータ識別ラベル
+- MTContentModifiedAuthorDisplayName (F) — コンテンツデータを最後に更新したユーザーの表示名
+- MTContentModifiedAuthorEmail (F) — コンテンツデータを最後に更新したユーザーのメールアドレス
+- MTContentModifiedAuthorID (F) — コンテンツデータを最後に更新したユーザーの ID
+- MTContentModifiedAuthorLink (F) — コンテンツデータを最後に更新したユーザーの表示名をリンク付きで
+- MTContentModifiedAuthorURL (F) — コンテンツデータを最後に更新したユーザーのウェブサイト URL
+- MTContentModifiedAuthorUsername (F) — コンテンツデータを最後に更新したユーザーのユーザー名
+- MTContentModifiedAuthorUserpicURL (F) — コンテンツデータを最後に更新したユーザーのプロフィール画像の URL
+- MTContentModifiedDate (F) — コンテンツデータを最後に保存した日時（再構築の日時ではない）
+- MTContentNext (B) — 次のコンテンツデータを文脈にする
+- MTContentPermalink (F) — コンテンツデータの公開 URL
+- MTContentPrevious (B) — 前のコンテンツデータを文脈にする
+- MTContentSiteDescription (F) — コンテンツデータが属するサイトの説明
+- MTContentSiteID (F) — コンテンツデータが属するサイトの ID
+- MTContentSiteName (F) — コンテンツデータが属するサイトの名前
+- MTContentSiteURL (F) — コンテンツデータが属するサイトの URL
+- MTContentStatus (F) — コンテンツデータの状態（Publish・Draft など）
+- MTContentTypeDescription (F) — コンテンツタイプの説明
+- MTContentTypeID (F) — コンテンツタイプの ID
+- MTContentTypeName (F) — コンテンツタイプの名前
+- MTContentTypeUniqueId (F) — コンテンツタイプのユニーク ID（環境をまたいでも変わらない）
+- MTContentUniqueID (F) — コンテンツデータのユニーク ID
+- MTContentUnpublishedDate (F) — コンテンツデータの公開終了日時
+- MTContents (B) — コンテンツデータを並べるループ（content_type で種類を選ぶ）
+- MTContentsCount (F) — いまの文脈で出るコンテンツデータの数
+- MTContentsFooter (B) — MTContents の最後の1回だけ出す
+- MTContentsHeader (B) — MTContents の最初の1回だけ出す
+
+## `tags-category.md`
+
+- MTCategories (B) — カテゴリを並べるループ（階層を区別しない。階層なら MTTopLevelCategories）
+- MTCategoryArchiveLink (F) — カテゴリアーカイブの URL
+- MTCategoryBasename (F) — カテゴリのベースネーム（出力フォルダ名）
+- MTCategoryCommentCount (F) — カテゴリの記事に付いたコメントの数
+- MTCategoryCount (F) — カテゴリの公開済み記事の数
+- MTCategoryCustomFieldDescription (F) — カテゴリのカスタムフィールドの説明
+- MTCategoryCustomFieldName (F) — カテゴリのカスタムフィールドの名前
+- MTCategoryCustomFieldValue (F) — カテゴリのカスタムフィールドの値
+- MTCategoryCustomFields (B) — カテゴリのカスタムフィールドを並べるループ
+- MTCategoryDescription (F) — カテゴリの説明
+- MTCategoryID (F) — カテゴリの ID
+- MTCategoryIfAllowPings (B) — カテゴリがトラックバックを受け付けていれば中身を出す
+- MTCategoryLabel (F) — カテゴリ名
+- MTCategoryNext (B) — 次のカテゴリを文脈にする
+- MTCategoryPrevious (B) — 前のカテゴリを文脈にする
+- MTCategorySetName (F) — カテゴリセットの名前
+- MTCategorySets (B) — カテゴリセットを並べるループ
+- MTCategoryTrackbackCount (F) — カテゴリが受けたトラックバックの数
+- MTCategoryTrackbackLink (F) — カテゴリのトラックバック URL
+- MTHasNoParentCategory (B) — 親カテゴリが無ければ中身を出す
+- MTHasNoSubCategories (B) — サブカテゴリが無ければ中身を出す
+- MTHasParentCategory (B) — 親カテゴリがあれば中身を出す
+- MTHasSubCategories (B) — サブカテゴリがあれば中身を出す
+- MTParentCategories (B) — 最上位からいまのカテゴリまでを回すループ（パンくず向け。glue で区切り）
+- MTParentCategory (B) — 親カテゴリを文脈にする
+- MTSubCategories (B) — いまのカテゴリの子カテゴリを階層で並べるループ（MTSubCatsRecurse と組で）
+- MTSubCategoryPath (F) — 最上位からいまのカテゴリまでのパス（ベースネームを / でつなぐ）
+- MTTopLevelCategories (B) — 最上位のカテゴリを並べるループ（いまのカテゴリに依らない）
+
+## `tags-folder.md`
+
+- MTFolderBasename (F) — フォルダのベースネーム（パス）
+- MTFolderCount (F) — フォルダのウェブページの数
+- MTFolderCustomFieldDescription (F) — フォルダのカスタムフィールドの説明
+- MTFolderCustomFieldName (F) — フォルダのカスタムフィールドの名前
+- MTFolderCustomFieldValue (F) — フォルダのカスタムフィールドの値
+- MTFolderCustomFields (B) — フォルダのカスタムフィールドを並べるループ
+- MTFolderDescription (F) — フォルダの説明
+- MTFolderFooter (B) — MTFolders の最後の1回だけ出す
+- MTFolderHeader (B) — MTFolders の最初の1回だけ出す
+- MTFolderID (F) — フォルダの ID
+- MTFolderLabel (F) — フォルダ名
+- MTFolderNext (B) — 次のフォルダを文脈にする
+- MTFolderPath (F) — 最上位からいまのフォルダまでのパス（foo/bar）
+- MTFolderPrevious (B) — 前のフォルダを文脈にする
+- MTFolders (B) — フォルダを並べるループ（階層を区別しない。階層なら MTTopLevelFolders）
+- MTHasNoParentFolder (B) — 親フォルダが無ければ中身を出す
+- MTHasNoSubFolders (B) — サブフォルダが無ければ中身を出す
+- MTHasParentFolder (B) — 親フォルダがあれば中身を出す
+- MTHasSubFolders (B) — サブフォルダがあれば中身を出す
+- MTParentFolder (B) — 親フォルダを文脈にする
+- MTParentFolders (B) — 最上位からいまのフォルダまでを回すループ（glue で区切り）
+- MTSubFolderRecurse (F) — MTSubFolders を子フォルダへ繰り返す（max_depth で深さ）
+- MTSubFolders (B) — いまのフォルダの子フォルダを階層で並べるループ
+- MTTopLevelFolder (B) — いまのフォルダの最上位のフォルダを文脈にする
+- MTTopLevelFolders (B) — 最上位のフォルダを並べるループ（いまのフォルダに依らない）
+- MTTopLevelParent (B) — いまのカテゴリの最上位のカテゴリを文脈にする
+
+## `tags-asset.md`
+
+- MTAsset (B) — id で指定した1つのアセットを文脈にする
+- MTAssetAddedBy (F) — アセットを追加したユーザーの表示名
+- MTAssetBlogID (F) — アセットが属するサイトの ID（システムのものは 0）
+- MTAssetCount (F) — サイトのアセットの数（サムネイルは数えない）
+- MTAssetDateAdded (F) — アセットを追加した日時（format で書式指定）
+- MTAssetDescription (F) — アセットの説明
+- MTAssetFileExt (F) — アセットの拡張子（ドット無し）
+- MTAssetFileName (F) — アセットのファイル名
+- MTAssetFilePath (F) — アセットのサーバ上のパス
+- MTAssetID (F) — アセットの ID
+- MTAssetIfTagged (B) — アセットに指定のタグが付いていれば中身を出す条件タグ
+- MTAssetIsFirstInRow (B) — MTAssets の assets_per_row で区切った行の先頭なら中身を出す
+- MTAssetIsLastInRow (B) — MTAssets の assets_per_row で区切った行の末尾なら中身を出す
+- MTAssetLabel (F) — アセットの名前
+- MTAssetLink (F) — アセットへのリンク（a 要素）
+- MTAssetMimeType (F) — アセットの MIME タイプ
+- MTAssetProperty (F) — アセットの詳細データ（property で項目を選ぶ。寸法など）
+- MTAssetRank (F) — アセットのスコアから出した順位（要スコア用プラグイン）
+- MTAssetScore (F) — アセットのスコアの合計（要スコア用プラグイン）
+- MTAssetScoreAvg (F) — アセットのスコアの平均（要スコア用プラグイン）
+- MTAssetScoreCount (F) — アセットにスコアが付いた回数（要スコア用プラグイン）
+- MTAssetScoreHigh (F) — アセットのスコアの最高値（要スコア用プラグイン）
+- MTAssetScoreLow (F) — アセットのスコアの最低値（要スコア用プラグイン）
+- MTAssetSiteID (F) — アセットが属するサイトの ID
+- MTAssetTags (B) — アセットに付いたタグを並べるループ（glue で区切り）
+- MTAssetThumbnailLink (F) — 画像アセットのサムネイルを、元画像へのリンク付きで出す
+- MTAssetThumbnailURL (F) — 画像アセットのサムネイルの URL（大きさを指定できる）
+- MTAssetType (F) — アセットの種類（image・audio・video・file など）
+- MTAssetURL (F) — アセットの元ファイルの URL
+- MTAssets (B) — アセットを並べるループ（種類・タグ・並び順で絞れる）
+- MTAssetsFooter (B) — MTAssets の最後の1回だけ出す
+- MTAssetsHeader (B) — MTAssets の最初の1回だけ出す
+- MTAudioCustomFieldDescription (F) — オーディオのカスタムフィールドの説明
+- MTAudioCustomFieldName (F) — オーディオのカスタムフィールドの名前
+- MTAudioCustomFieldValue (F) — オーディオのカスタムフィールドの値
+- MTAudioCustomFields (B) — オーディオのカスタムフィールドを並べるループ
+- MTFileCustomFieldDescription (F) — ファイル（アイテム）のカスタムフィールドの説明
+- MTFileCustomFieldName (F) — ファイル（アイテム）のカスタムフィールドの名前
+- MTFileCustomFieldValue (F) — ファイル（アイテム）のカスタムフィールドの値
+- MTFileCustomFields (B) — ファイル（アイテム）のカスタムフィールドを並べるループ
+- MTFileTemplate (F) — アーカイブマッピングの規則に沿ったアーカイブのパス
+- MTImageCustomFieldDescription (F) — 画像のカスタムフィールドの説明
+- MTImageCustomFieldName (F) — 画像のカスタムフィールドの名前
+- MTImageCustomFieldValue (F) — 画像のカスタムフィールドの値
+- MTImageCustomFields (B) — 画像のカスタムフィールドを並べるループ
+- MTImageHeight (F) — アップロードした画像の高さ（ポップアップ画像のテンプレート向け）
+- MTImageURL (F) — アップロードした画像の URL（ポップアップ画像のテンプレート向け）
+- MTImageWidth (F) — アップロードした画像の幅（ポップアップ画像のテンプレート向け）
+- MTVideoCustomFieldDescription (F) — ビデオのカスタムフィールドの説明
+- MTVideoCustomFieldName (F) — ビデオのカスタムフィールドの名前
+- MTVideoCustomFieldValue (F) — ビデオのカスタムフィールドの値
+- MTVideoCustomFields (B) — ビデオのカスタムフィールドを並べるループ
+
+## `tags-tag.md`
+
+- MTTagCount (F) — いまのタグが付いた記事・ページの数
+- MTTagID (F) — タグの ID
+- MTTagLabel (F) — タグの名前（MTTagName と同じ）
+- MTTagName (F) — タグの名前
+- MTTagRank (F) — タグの使用頻度の順位（小さいほど多い。タグクラウド向け）
+- MTTagSearchLink (F) — そのタグで検索する URL
+- MTTags (B) — タグを並べるループ
+
+## `tags-site.md`
+
+- MTBlogArchiveURL (F) — サイトのアーカイブ URL（未設定ならサイト URL）
+- MTBlogCategoryCount (F) — サイトのカテゴリの数
+- MTBlogCommentCount (F) — サイトのコメントの数
+- MTBlogCustomFieldDescription (F) — ブログのカスタムフィールドの説明
+- MTBlogCustomFieldName (F) — ブログのカスタムフィールドの名前
+- MTBlogCustomFieldValue (F) — ブログのカスタムフィールドの値
+- MTBlogCustomFields (B) — ブログのカスタムフィールドを並べるループ
+- MTBlogDateLanguage (F) — サイトの「日付の言語」の設定
+- MTBlogDescription (F) — サイトの説明
+- MTBlogFileExtension (F) — アーカイブの拡張子（ドット付き）
+- MTBlogHost (F) — サイト URL のホスト名
+- MTBlogID (F) — サイトの ID
+- MTBlogIfCommentsOpen (B) — サイトがコメント（匿名を含む）を受け付けていれば中身を出す
+- MTBlogLanguage (F) — サイトの使用言語
+- MTBlogName (F) — サイトの名前
+- MTBlogParentWebsite (B) — ブログの親ウェブサイトを文脈にする
+- MTBlogPingCount (F) — サイトの公開済みトラックバックの数
+- MTBlogRelativeURL (F) — サイト URL のホストを除いた相対 URL
+- MTBlogResultFooter (B) — 検索結果でサイトが切り替わる直前に出す
+- MTBlogResultHeader (B) — 検索結果でサイトが切り替わった直後に出す
+- MTBlogSitePath (F) — サイトの公開パス（サーバ上のディレクトリ）
+- MTBlogTemplateSetID (F) — テーマの識別子。MT5 以降は MTBlogThemeID を使う
+- MTBlogThemeID (F) — サイトに適用したテーマの識別子
+- MTBlogTimezone (F) — サイトのタイムゾーン（UTC との時差）
+- MTBlogURL (F) — サイトの絶対 URL
+- MTBlogs (B) — サイト（ブログ）を並べるループ
+- MTChildSites (B) — 子サイトを並べるループ
+- MTMultiBlog (B) — 複数のサイトをまたいで中身を出す（include_blogs などで選ぶ）
+- MTMultiBlogIfLocalBlog (B) — MTMultiBlog の中で、いまのサイトが元のサイトなら中身を出す
+- MTMultiBlogLocalBlog (B) — MTMultiBlog の中で、一時的に元のサイトの文脈に戻す
+- MTOtherBlog (B) — blog_id で指定したサイトの文脈にする
+- MTParentSite (B) — 子サイトから親サイトを文脈にする
+- MTSiteArchiveURL (F) — サイトのアーカイブ URL（未設定ならサイト URL）
+- MTSiteCategoryCount (F) — サイトのカテゴリの数（カテゴリセットのものは数えない）
+- MTSiteCommentCount (F) — サイトのコメントの数（MTBlogCommentCount と同じ）
+- MTSiteContentCount (F) — サイトの公開済みコンテンツデータの数（content_type で絞る）
+- MTSiteDateLanguage (F) — サイトの「日付の言語」（MTBlogDateLanguage と同じ）
+- MTSiteDescription (F) — サイトの説明（MTBlogDescription と同じ）
+- MTSiteEntryCount (F) — サイトの公開済み記事の数（MTBlogEntryCount と同じ）
+- MTSiteFileExtension (F) — アーカイブの拡張子（ドット付き）
+- MTSiteHasChildSite (B) — サイトに子サイトがあれば中身を出す
+- MTSiteHost (F) — サイト URL のホスト名
+- MTSiteID (F) — サイトの ID（MTBlogID と同じ）
+- MTSiteIfCommentsOpen (B) — サイトがコメント（匿名を含む）を受け付けていれば中身を出す
+- MTSiteLanguage (F) — サイトの使用言語
+- MTSiteName (F) — サイトの名前（MTBlogName と同じ）
+- MTSitePageCount (F) — サイトの公開済みウェブページの数
+- MTSiteParentSite (F) — 子サイトから親サイトを文脈にする
+- MTSitePath (F) — サイトの公開パス（サーバ上のディレクトリ）
+- MTSitePingCount (F) — サイトの公開済みトラックバックの数
+- MTSiteRelativeURL (F) — サイト URL のホストを除いた相対 URL
+- MTSiteThemeID (F) — サイトに適用したテーマの識別子
+- MTSiteTimezone (F) — サイトのタイムゾーン（UTC との時差）
+- MTSiteURL (F) — サイトの絶対 URL（末尾は必ず /）
+- MTSites (B) — サイトを並べるループ（子サイトは含まない）
+- MTSitesIfLocalSite (B) — MTSites の中で、いまのサイトが再構築中のサイトなら中身を出す
+- MTSitesLocalSite (B) — MTSites の中で、一時的に再構築中のサイトの文脈に戻す
+- MTWebsiteCommentCount (F) — ウェブサイトのコメントの数（配下のブログは含まない）
+- MTWebsiteCustomFieldDescription (F) — ウェブサイトのカスタムフィールドの説明
+- MTWebsiteCustomFieldName (F) — ウェブサイトのカスタムフィールドの名前
+- MTWebsiteCustomFieldValue (F) — ウェブサイトのカスタムフィールドの値
+- MTWebsiteCustomFields (B) — ウェブサイトのカスタムフィールドを並べるループ
+- MTWebsiteDateLanguage (F) — ウェブサイトの「日付の言語」
+- MTWebsiteDescription (F) — ウェブサイトの説明
+- MTWebsiteEntryCount (F) — ウェブサイトの公開済み記事の数（配下のブログは既定で含まない）
+- MTWebsiteFileExtension (F) — ウェブサイトのアーカイブの拡張子（ドット付き）
+- MTWebsiteHasBlog (B) — ウェブサイトの配下にブログがあれば中身を出す
+- MTWebsiteHost (F) — ウェブサイト URL のホスト名
+- MTWebsiteID (F) — ウェブサイトの ID
+- MTWebsiteIfCommentsOpen (B) — ウェブサイトがコメント（匿名を含む）を受け付けていれば中身を出す
+- MTWebsiteLanguage (F) — ウェブサイトの使用言語
+- MTWebsiteName (F) — ウェブサイトの名前
+- MTWebsitePageCount (F) — ウェブサイトの公開済みウェブページの数（配下のブログは含まない）
+- MTWebsitePath (F) — ウェブサイトの公開パス（サーバ上のディレクトリ）
+- MTWebsitePingCount (F) — ウェブサイトの公開済みトラックバックの数
+- MTWebsiteRelativeURL (F) — ウェブサイト URL のホストを除いた相対 URL
+- MTWebsiteThemeID (F) — ウェブサイトに適用したテーマの識別子
+- MTWebsiteTimezone (F) — ウェブサイトのタイムゾーン（UTC との時差）
+- MTWebsiteURL (F) — ウェブサイトの絶対 URL
+- MTWebsites (B) — ウェブサイトを並べるループ
+
+## `tags-archive.md`
+
+- MTArchiveCount (F) — いまのアーカイブに含まれる記事の数
+- MTArchiveDate (F) — 日付アーカイブの期間の始まりの日付
+- MTArchiveDateEnd (F) — 日付アーカイブの期間の終わりの日付
+- MTArchiveFile (F) — いまのアーカイブの出力ファイル名
+- MTArchiveLink (F) — いまのアーカイブの絶対 URL
+- MTArchiveList (B) — アーカイブを並べるループ（archive_type で種類を選ぶ）
+- MTArchiveListFooter (B) — MTArchiveList の最後の1回だけ出す
+- MTArchiveListHeader (B) — MTArchiveList の最初の1回だけ出す
+- MTArchiveNext (B) — 次のアーカイブを文脈にする（中の MTArchiveTitle などが次を指す）
+- MTArchivePrevious (B) — 前のアーカイブを文脈にする
+- MTArchiveTitle (F) — いまのアーカイブの題（月別なら年月、カテゴリならカテゴリ名など）
+- MTArchiveType (F) — アーカイブの種類の識別子（Monthly など）
+- MTArchiveTypeLabel (F) — アーカイブの種類の表示名（ブログの言語で）
+- MTArchives (B) — サイトが持つアーカイブの種類を並べるループ（サイトマップ向け）
+- MTCalendar (B) — 1か月分のカレンダーを組むループ（month で月を選ぶ）
+- MTCalendarCellNumber (F) — カレンダーのセルの番号（左上から 1）
+- MTCalendarDate (F) — カレンダーのセルの日時（format で書式指定）
+- MTCalendarDay (F) — カレンダーのセルの日
+- MTCalendarIfBlank (B) — カレンダーの空のセルで中身を出す
+- MTCalendarIfContents (B) — MTContentCalendar の中で、その日にコンテンツデータがあれば出す
+- MTCalendarIfEntries (B) — その日に記事があれば中身を出す
+- MTCalendarIfNoContents (B) — MTContentCalendar の中で、その日にコンテンツデータが無ければ出す
+- MTCalendarIfNoEntries (B) — その日に記事が無ければ中身を出す
+- MTCalendarIfToday (B) — 今日のセルで中身を出す
+- MTCalendarWeekFooter (B) — 週の終わりで中身を出す（</tr> など）
+- MTCalendarWeekHeader (B) — 週の始まりで中身を出す（<tr> など）
+- MTDate (F) — 再構築した日時（format で書式指定）
+- MTDateFooter (B) — MTEntries の中で、次の記事と日付が変わる直前に出す
+- MTDateHeader (B) — MTEntries の中で、前の記事と日付が変わった直後に出す
+
+## `tags-control.md`
+
+- MTApp:ActionBar (F) — 管理画面用。一覧・編集画面の操作バーを組む
+- MTApp:Form (B) — 管理画面用。フォームを組む
+- MTApp:Link (F) — 管理画面用。管理画面内へのリンクを組む
+- MTApp:ListFilters (F) — 管理画面用。一覧の絞り込みを組む
+- MTApp:Listing (B) — 管理画面用。一覧の表を組む
+- MTApp:PageActions (F) — 管理画面用。ページの操作欄を組む
+- MTApp:Setting (B) — 管理画面用。設定項目の1行を組む
+- MTApp:SettingGroup (B) — 管理画面用。設定項目のまとまりを組む
+- MTApp:StatusMsg (B) — 管理画面用。状態メッセージを出す
+- MTApp:Widget (B) — 管理画面用。ウィジェットの枠を組む
+- MTBlockEditorBlockAsset (F) — ブロックエディタの画像・ファイルのブロックをアセットとして出す
+- MTBlockEditorBlocks (F) — ブロックエディタのブロックを並べる（マルチカラムは入れ子で）
+- MTElse (B) — 条件に合わなかったときの中身（終了タグは省略可）
+- MTElseIf (B) — MTIf の続きの条件
+- MTFor (B) — for ループ（from・to・step）
+- MTIf (B) — 条件で出し分ける（変数・タグの値を比べる）
+- MTIfAllowCommentHTML (B) — コメントで一部の HTML を許していれば中身を出す
+- MTIfArchiveType (B) — 指定の種類のアーカイブを出力中なら中身を出す
+- MTIfArchiveTypeEnabled (B) — 指定の種類のアーカイブを使っていれば中身を出す
+- MTIfBlog (F) — ブログの文脈なら中身を出す
+- MTIfCategory (B) — 文脈か記事が指定のカテゴリに属していれば中身を出す
+- MTIfCommentParent (B) — コメントに返信元があれば中身を出す
+- MTIfCommentReplies (B) — コメントに返信があれば中身を出す
+- MTIfCommenterIsAuthor (B) — コメントした人が MT の登録ユーザーなら中身を出す
+- MTIfCommenterIsEntryAuthor (B) — コメントした人が記事の作成者なら中身を出す
+- MTIfCommenterTrusted (B) — コメントした人が登録済み（信頼済み）なら中身を出す
+- MTIfCommentsAccepted (B) — サイトと記事の両方がコメントを受け付けていれば中身を出す
+- MTIfCommentsActive (B) — コメントを受け付けているか、すでにコメントがあれば中身を出す
+- MTIfCommentsAllowed (B) — サイトがコメントを受け付けていれば中身を出す（記事の設定は見ない）
+- MTIfCommentsModerated (B) — コメントをすぐ公開しない設定なら中身を出す
+- MTIfCurrentPage (B) — MTPagerBlock の中で、いまのページなら中身を出す
+- MTIfDynamic (B) — テンプレートがダイナミック公開なら中身を出す
+- MTIfExternalUserManagement (B) — 外部ユーザー管理（ExternalUserManagement）が有効なら中身を出す
+- MTIfFolder (B) — 文脈が指定のフォルダを含めば中身を出す
+- MTIfImageSupport (B) — サーバに画像処理ライブラリがあれば中身を出す
+- MTIfIsAncestor (B) — child のカテゴリがいまのカテゴリの子孫なら中身を出す
+- MTIfIsDescendant (B) — parent のカテゴリがいまのカテゴリの祖先なら中身を出す
+- MTIfMoreResults (B) — 検索結果が1ページの件数より多ければ中身を出す
+- MTIfNeedEmail (B) — コメントでメールアドレスが必須なら中身を出す
+- MTIfPingsAccepted (B) — サイトと記事の両方がトラックバックを受け付けていれば中身を出す
+- MTIfPingsActive (B) — トラックバックを受け付けているか、すでにあれば中身を出す
+- MTIfPingsAllowed (B) — サイトがトラックバックを受け付けていれば中身を出す（記事の設定は見ない）
+- MTIfPingsModerated (B) — トラックバックをすぐ公開しない設定なら中身を出す
+- MTIfPreviousResults (B) — 検索結果に前のページがあれば中身を出す
+- MTIfRegistrationAllowed (B) — サイトからのユーザー登録を許していれば中身を出す
+- MTIfRegistrationNotRequired (B) — 匿名・未認証のコメントを許していれば中身を出す
+- MTIfRegistrationRequired (B) — コメントに認証が必要なら中身を出す
+- MTIfRequireCommentEmails (B) — コメントでメールアドレスが必須なら中身を出す
+- MTIfStatic (B) — テンプレートがスタティック公開なら中身を出す
+- MTIfStraightSearch (B) — キーワード検索なら中身を出す
+- MTIfTagSearch (B) — タグ検索なら中身を出す
+- MTIfWebsite (B) — ウェブサイトの文脈なら中身を出す
+- MTIgnore (B) — 囲んだ中身を処理も出力もしない（コメントアウト）
+- MTInclude (F) — テンプレートモジュールやファイルを読み込む（module・file など）
+- MTIncludeBlock (B) — モジュールを読み込み、囲んだ中身をモジュールの決まった位置に差し込む
+- MTIndexBasename (F) — インデックスのファイル名（IndexBasename。既定は index）
+- MTIndexLink (F) — インデックステンプレートの出力の絶対 URL（MTIndexList の中）
+- MTIndexList (B) — インデックステンプレートを並べるループ
+- MTIndexName (F) — インデックステンプレートの名前（MTIndexList の中）
+- MTLoop (B) — 配列・ハッシュの変数を回すループ（name で変数を選ぶ）
+- MTSection (B) — 囲んだ中身をキャッシュする（管理画面用）
+- MTSetHashVar (B) — キーと値の組をまとめてハッシュ変数にする
+- MTSetVar (F) — 変数に値を入れる（name・value。呼ぶのは MTVar）
+- MTSetVarBlock (B) — 囲んだ中身（タグを処理した結果）を変数に入れる
+- MTSetVarTemplate (B) — 囲んだ中身をテンプレートとして変数に入れる（呼ぶたびに処理される）
+- MTSetVars (B) — 複数の変数を「名前=値」の行でまとめて入れる
+- MTSubCatIsFirst (B) — カテゴリのループの最初の1回で中身を出す（ul の開始など）
+- MTSubCatIsLast (B) — カテゴリのループの最後の1回で中身を出す（ul の終了など）
+- MTSubCatsRecurse (F) — MTSubCategories を子カテゴリへ繰り返す（max_depth で深さ）
+- MTTemplateCreatedOn (F) — テンプレートを作った日時
+- MTTemplateCustomFieldDescription (F) — テンプレートのカスタムフィールドの説明
+- MTTemplateCustomFieldName (F) — テンプレートのカスタムフィールドの名前
+- MTTemplateCustomFieldValue (F) — テンプレートのカスタムフィールドの値
+- MTTemplateCustomFields (B) — テンプレートのカスタムフィールドを並べるループ
+- MTTemplateNote (F) — 何も出さない（属性に書いた内容をテンプレート内のメモにする）
+- MTUnless (B) — 条件に合わないときに中身を出す（MTIf の逆）
+- MTVar (F) — 変数の値（MTGetVar と同じ。配列・ハッシュの要素も取れる）
+- MTWidgetSet (F) — name で指定したウィジェットセットを出す
+
+## `tags-pagination.md`
+
+- MTCurrentPage (F) — いま表示中のページが何ページ目か（ページ分割）
+- MTMaxResults (F) — mt-config.cgi の MaxResults の値
+- MTNextLink (F) — 検索結果の次のページの URL
+- MTPreviousLink (F) — 検索結果の前のページの URL
+- MTTotalPages (F) — 検索結果の総ページ数
+
+## `tags-user.md`
+
+- MTAuthorAuthIconURL (F) — ユーザーの登録元サービスのアイコン URL
+- MTAuthorAuthType (F) — ユーザーの登録元（通常は MT）
+- MTAuthorBasename (F) — ユーザーのベースネーム（ユーザーアーカイブのフォルダ名など）
+- MTAuthorCommentCount (F) — ユーザーが投稿したコメントの数
+- MTAuthorContentCount (F) — ユーザーが公開しているコンテンツデータの数
+- MTAuthorCustomFields (B) — ユーザーのカスタムフィールドを並べるループ
+- MTAuthorDisplayName (F) — ユーザーの表示名
+- MTAuthorEmail (F) — ユーザーのメールアドレス
+- MTAuthorEntriesCount (F) — ユーザーの記事の数（未公開を含む）
+- MTAuthorEntryCount (F) — ユーザーの公開済み記事の数
+- MTAuthorHasContent (B) — ユーザーが公開済みのコンテンツデータを持っていれば中身を出す
+- MTAuthorHasEntry (B) — ユーザーが公開済みの記事を持っていれば中身を出す
+- MTAuthorHasPage (B) — ユーザーが公開済みのウェブページを持っていれば中身を出す
+- MTAuthorID (F) — ユーザーの ID
+- MTAuthorName (F) — ユーザー名（サインイン名。公開ページでは表示名の方を推奨）
+- MTAuthorNext (B) — 次のユーザーアーカイブを文脈にする
+- MTAuthorPrevious (B) — 前のユーザーアーカイブを文脈にする
+- MTAuthorRank (F) — ユーザーのスコアから出した順位（要スコア用プラグイン）
+- MTAuthorScore (F) — ユーザーのスコアの合計（要スコア用プラグイン）
+- MTAuthorScoreAvg (F) — ユーザーのスコアの平均（要スコア用プラグイン）
+- MTAuthorScoreCount (F) — ユーザーにスコアが付いた回数（要スコア用プラグイン）
+- MTAuthorScoreHigh (F) — ユーザーのスコアの最高値（要スコア用プラグイン）
+- MTAuthorScoreLow (F) — ユーザーのスコアの最低値（要スコア用プラグイン）
+- MTAuthorURL (F) — ユーザーのウェブサイト URL
+- MTAuthorUserpic (F) — ユーザーのプロフィール画像の img 要素
+- MTAuthorUserpicAsset (B) — ユーザーのプロフィール画像をアセットとして文脈にする
+- MTAuthorUserpicURL (F) — ユーザーのプロフィール画像の URL
+- MTAuthors (B) — ユーザーを並べるループ（並び順・件数・役割で絞れる）
+- MTOtherProfileVar (F) — 外部サービスの値を取り出す
+- MTPasswordValidation (F) — パスワード検証用の JavaScript
+- MTPasswordValidationRule (F) — パスワード検証の規則（最低文字数など）
+- MTSignOutLink (F) — コメント投稿者のサインアウトのリンク
+- MTSigninLink (F) — コメント投稿者のサインインのリンク
+- MTUserSessionState (F) — サインイン中のユーザーを表す JSON
+
+## `tags-comment.md`
+
+- MTCaptchaFields (F) — CAPTCHA の画像と入力欄
+- MTCommentAuthor (F) — コメント投稿者の名前（default で無記名時の名前）
+- MTCommentAuthorIdentity (F) — 認証してコメントした人のプロフィール画像（登録先へのリンク付き）
+- MTCommentAuthorLink (F) — コメント投稿者の名前をリンク付きで（default_name で無記名時の名前）
+- MTCommentBlogID (F) — コメントが属するサイトの ID
+- MTCommentBody (F) — コメントの本文
+- MTCommentCustomFieldDescription (F) — コメントのカスタムフィールドの説明
+- MTCommentCustomFieldName (F) — コメントのカスタムフィールドの名前
+- MTCommentCustomFieldValue (F) — コメントのカスタムフィールドの値
+- MTCommentCustomFields (B) — コメントのカスタムフィールドを並べるループ
+- MTCommentDate (F) — コメントの投稿日時（format で書式指定）
+- MTCommentEmail (F) — コメント投稿者のメールアドレス（spam_protect で難読化）
+- MTCommentEntry (B) — コメント先の記事を文脈にする
+- MTCommentEntryID (F) — コメント先の記事の ID
+- MTCommentID (F) — コメントの ID（アンカーに使う）
+- MTCommentIP (F) — コメントを送ったホストの IP アドレス
+- MTCommentIfModerated (B) — コメントが保留中なら中身を出す（管理画面・メール向け）
+- MTCommentLink (F) — コメントのパーマリンク
+- MTCommentOrderNumber (F) — 一覧の中でのコメントの通し番号（1 から）
+- MTCommentParent (B) — 返信元のコメントを文脈にする
+- MTCommentParentID (F) — 返信元のコメントの ID（無ければ 0）
+- MTCommentPreviewIsStatic (F) — システム用。コメント後に戻るページの情報を渡す（プレビュー・エラーのテンプレート）
+- MTCommentRank (F) — コメントのスコアから出した順位（要スコア用プラグイン）
+- MTCommentReplies (B) — コメントへの返信を並べるループ
+- MTCommentRepliesRecurse (F) — MTCommentReplies の中身を返信の深さまで繰り返す
+- MTCommentReplyToLink (F) — コメントに返信するリンク（標準テーマの JavaScript と組で使う）
+- MTCommentScore (F) — コメントのスコアの合計（要スコア用プラグイン）
+- MTCommentScoreAvg (F) — コメントのスコアの平均（要スコア用プラグイン）
+- MTCommentScoreCount (F) — コメントにスコアが付いた回数（要スコア用プラグイン）
+- MTCommentScoreHigh (F) — コメントのスコアの最高値（要スコア用プラグイン）
+- MTCommentScoreLow (F) — コメントのスコアの最低値（要スコア用プラグイン）
+- MTCommentScript (F) — コメント処理の CGI のファイル名
+- MTCommentSiteID (F) — コメントが属するサイトの ID
+- MTCommentURL (F) — コメント投稿者が入れた URL
+- MTCommenterAuthIconURL (F) — コメントした人のサインイン元サービスのアイコン URL
+- MTCommenterAuthType (F) — コメントした人のアカウントの登録元（MT など）
+- MTCommenterEmail (F) — コメントした人のメールアドレス（spam_protect で難読化）
+- MTCommenterID (F) — コメントした人のユーザー ID
+- MTCommenterName (F) — コメントした人の名前
+- MTCommenterURL (F) — コメントした人のウェブサイト URL
+- MTCommenterUsername (F) — コメントした人のユーザー名（無ければ空）
+- MTCommenterUserpic (F) — コメントした登録ユーザーのプロフィール画像の img 要素
+- MTCommenterUserpicAsset (B) — コメントした登録ユーザーのプロフィール画像をアセットとして文脈にする
+- MTCommenterUserpicURL (F) — コメントした登録ユーザーのプロフィール画像の URL
+- MTComments (B) — コメントを並べるループ（記事・ページの中ならそのコメント）
+- MTCommentsFooter (B) — MTComments の最後の1回だけ出す
+- MTCommentsHeader (B) — MTComments の最初の1回だけ出す
+- MTPingBlogName (F) — トラックバック送信元のサイト名
+- MTPingDate (F) — トラックバックを受けた日時（format で書式指定）
+- MTPingEntry (B) — トラックバックを受けた記事を文脈にする
+- MTPingExcerpt (F) — トラックバックの概要
+- MTPingID (F) — トラックバックの ID
+- MTPingIP (F) — トラックバック送信元の IP アドレス
+- MTPingRank (F) — トラックバックのスコアから出した順位（要スコア用プラグイン）
+- MTPingScore (F) — トラックバックのスコアの合計（要スコア用プラグイン）
+- MTPingScoreAvg (F) — トラックバックのスコアの平均（要スコア用プラグイン）
+- MTPingScoreCount (F) — トラックバックにスコアが付いた回数（要スコア用プラグイン）
+- MTPingScoreHigh (F) — トラックバックのスコアの最高値（要スコア用プラグイン）
+- MTPingScoreLow (F) — トラックバックのスコアの最低値（要スコア用プラグイン）
+- MTPingTitle (F) — トラックバック送信元のページのタイトル
+- MTPingURL (F) — トラックバック送信元のページの URL
+- MTPings (B) — トラックバックを並べるループ（記事の中ならその記事のもの）
+- MTPingsFooter (B) — MTPings の最後の1回だけ出す
+- MTPingsHeader (B) — MTPings の最初の1回だけ出す
+- MTPingsSent (B) — 記事が送ったトラックバックを並べるループ
+- MTPingsSentURL (F) — 送ったトラックバックの送り先 URL
+- MTTrackbackScript (F) — トラックバック処理の CGI のファイル名
+
+## `tags-search.md`
+
+- MTNoSearch (B) — キーワード無しで検索したときに中身を出す
+- MTNoSearchResults (B) — 検索結果が0件のときに中身を出す
+- MTSearchIncludeBlogs (F) — 検索対象のサイトの ID（カンマ区切り）
+- MTSearchMaxResults (F) — mt-config.cgi の SearchMaxResults の値
+- MTSearchResultCount (F) — 検索結果の件数（複数サイトなら合計）
+- MTSearchResults (B) — 検索結果を並べるループ（中では記事のタグが使える）
+- MTSearchResultsFooter (B) — 検索結果の最後の1件で出す
+- MTSearchResultsHeader (B) — 検索結果の最初の1件で出す
+- MTSearchScript (F) — 検索の CGI のファイル名
+- MTSearchString (F) — 検索したキーワード
+- MTSearchTemplateBlogID (F) — 検索結果に使ったテンプレートのサイトの ID
+- MTSearchTemplateID (F) — 検索結果に使ったテンプレートの識別子
+
+## `tags-customfield.md`
+
+- MTCustomFieldAsset (B) — アセット型のカスタムフィールドの値をアセットとして文脈にする
+- MTCustomFieldBasename (F) — カスタムフィールドのベースネーム（文脈で対象が決まる）
+- MTCustomFieldDescription (F) — カスタムフィールドの説明（文脈で対象が決まる）
+- MTCustomFieldHTML (F) — カスタムフィールドの入力欄の HTML
+- MTCustomFieldIsRequired (B) — カスタムフィールドが必須なら中身を出す
+- MTCustomFieldName (F) — カスタムフィールドの名前（文脈で対象が決まる）
+- MTCustomFieldValue (F) — カスタムフィールドの値（文脈で対象が決まる）
+
+## `tags-format.md`
+
+- MTMarkdownOptions (B) — Markdown の変換結果の形式を変える
+- MTSmartyPantsVersion (F) — Markdown プラグイン（SmartyPants）の版
+- MTTextFormat (F) — 複数行テキストのテキストフォーマット
+- MTTextile (B) — 囲んだ中身を Textile で処理する
+- MTTextileHeadOffset (F) — Textile の見出しの段を start の分だけ下げる
+- MTTextileOptions (F) — Textile の変換のオプション（テンプレートの最初に書く）
+
+## `tags-system.md`
+
+- MTAdminCGIPath (F) — 管理画面の CGI を置いた URL（mt-config.cgi の AdminCGIPath）
+- MTAdminScript (F) — 管理画面のスクリプト名（AdminScript の値。既定は mt.cgi）
+- MTBuildTemplateID (F) — いま出力しているファイルのテンプレートの ID
+- MTCGIHost (F) — MT を置いたホスト名
+- MTCGIPath (F) — MT の CGI の URL（CGIPath の値。末尾 /）
+- MTCGIRelativeURL (F) — MT の CGI の URL のパス部分
+- MTCGIServerPath (F) — MT を置いたサーバ上のパス
+- MTCanonicalLink (F) — いまのページの正規 URL を link 要素で出す
+- MTCanonicalURL (F) — いまのページの正規 URL
+- MTConfigFile (F) — mt-config.cgi のサーバ上のパス
+- MTDataAPIScript (F) — Data API の CGI の名前（DataAPIScript の値）
+- MTDataAPIVersion (F) — Data API の版
+- MTDefaultLanguage (F) — MT の既定の言語
+- MTErrorMessage (F) — コメント投稿のエラーメッセージ
+- MTHTTPContentType (F) — ダイナミック公開・検索結果の Content-Type ヘッダを決める
+- MTLink (F) — インデックステンプレートか記事の URL（template・entry_id で選ぶ）
+- MTProductName (F) — 製品名（Movable Type）
+- MTPublishCharset (F) — 出力の文字コード（PublishCharset の値）
+- MTStaticFilePath (F) — mt-static のサーバ上の絶対パス
+- MTStaticWebPath (F) — mt-static の URL
+- MTStatsSnippet (F) — 管理画面で設定したアクセス解析のトラッキングコード
+- MTSupportDirectoryURL (F) — サポートディレクトリの URL（SupportDirectoryURL の値）
+- MTVersion (F) — Movable Type の版

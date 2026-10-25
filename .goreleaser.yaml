@@ -1,0 +1,28 @@
+version: 2
+
+builds:
+  - main: ./cmd/mtb
+    binary: mtb
+    ldflags:
+      - -s -w -X github.com/ideamans/movable-type-builder-cli/internal/cmd.Version={{ .Version }}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  # アーカイブ名はリポジトリ名、中のバイナリは mtb。
+  # install スキルがこの食い違いを明記している。
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+
+changelog:
+  sort: asc

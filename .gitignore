@@ -1,0 +1,6 @@
+/mtb
+/dist/
+# go build ./internal/<生成器> が直下に作るバイナリ
+/gen-spec
+/gen-skilldocs
+/gen-llmdocs

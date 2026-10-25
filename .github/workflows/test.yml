@@ -1,0 +1,55 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: gofmt
+        run: |
+          unformatted=$(gofmt -l .)
+          if [ -n "$unformatted" ]; then
+            echo "::error::gofmt が必要なファイル: $unformatted"
+            exit 1
+          fi
+
+      - name: go vet
+        run: go vet ./...
+
+      - name: build
+        run: go build ./...
+
+      # spec.json と 90-commands.md は go:embed の都合でコミットしている。
+      # ズレ防止はここで再生成して差分を検査すること。spec.json は公式定義を
+      # 固定したコミット（gen-spec の sourceCommit）から取るので、go generate とは別に流す。
+      - name: 生成物の再生成
+        run: |
+          go run ./internal/gen-spec -out internal/spec/spec.json
+          go generate ./...
+
+      - name: コミット済みの生成物が古ければ失敗
+        run: |
+          if ! git diff --exit-code; then
+            echo "::error::make spec の結果がコミットと違います。生成物をコミットしてください"
+            exit 1
+          fi
+
+      - name: test
+        run: go test ./...
+
+      - name: 埋め込みリファレンスが出力できること
+        run: go run ./cmd/mtb llm | head -5
