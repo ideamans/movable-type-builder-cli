@@ -21,7 +21,7 @@ compatibility: Requires the `mtb` binary on PATH (run the mtb-install skill if m
 | --- | --- |
 | rsync / scp | これがあるならこの進め方が一番きれい |
 | 管理画面のテーマインストール | zip を人が上げる。CI には向かない |
-| mtb-plus 拡張の `mtb themes files upload <id> --dir <dir>` | MT 側に MtbPlus と `MtbPlusAllowFileUpload 1` が要る。rsync の代わりになる |
+| mtb-pro 拡張の `mtb themes files upload <id> --dir <dir>` | MT 側に MtbPro と `MtbProAllowFileUpload 1` が要る。rsync の代わりになる |
 | **どちらも無い** | **この進め方は採れない。** `mtb-usage` でテンプレートを直接作るか、`sites templates pull/push` で往復させる |
 
 相手に「サーバのファイルシステムに置けますか」と聞くこと。答えが No なら

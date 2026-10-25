@@ -42,7 +42,7 @@ cobra のツリーを組み立てる。生成されるのは 220 コマンド / 
 拡張は別リポジトリのディレクトリ（`mtb-extension.json` ＋ `spec.json` ＋ `llm.md`
 ＋ Claude Code のプラグイン）で、`internal/extension` が読み、`internal/cmd/extensions.go`
 が**生成コマンドと同じ `newOperationCmd` で**ツリーに足す。だから `--set` などが
-そのまま効く。実例は `../mtb-plugin-mtb-plus`（MT 側は `../mt-plugin-mtb-plus`）。
+そのまま効く。実例は `../mtb-plugin-pro`（MT 側は `../mt-plugin-mtb-pro`）。
 
 - **拡張は宣言だけ。コードを読み込む口は作らない。** 他人の拡張を入れて任意の
   コードが走るようになると、この CLI の性格が変わる
@@ -58,7 +58,7 @@ cobra のツリーを組み立てる。生成されるのは 220 コマンド / 
   `--replace`（同名の**アセット**を消す）はアセットのアップロードにだけ付ける
   （`hasUploadPath`）。テーマやサイトのファイルに付くとアセットを消しに行く
 - 本体の説明（00-guide・スキル）で「API ではできない」と書いた箇所には、
-  mtb-plus でできるなら**その旨を添える**。本体の事実は消さない（素の MT ではできない）
+  mtb-pro でできるなら**その旨を添える**。本体の事実は消さない（素の MT ではできない）
 
 ## Builder であって Data API のラッパーではない
 

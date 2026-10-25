@@ -80,7 +80,7 @@ type Client struct {
 	// 既定の Go-http-client では、Web サーバのログから mtb の呼び出しを見分けられません。
 	UserAgent string
 	// AuditNote は「何の作業か」の説明です。X-MTB-Audit-Note ヘッダで送り、
-	// サーバ側で監査ログを取っていれば（MtbPlus など）一緒に残ります。
+	// サーバ側で監査ログを取っていれば（MtbPro など）一緒に残ります。
 	AuditNote string
 }
 

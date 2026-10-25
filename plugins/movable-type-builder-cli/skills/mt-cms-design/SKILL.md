@@ -81,7 +81,7 @@ mtb sites permissions grant --site-id 4 --user-id 2 --role-id 2
 3. サイト設定 → Web サービスで **Data API のアクセスが許可されていること**
 
 ユーザーを作ったら、2 と 3 が管理画面の作業として残ることを必ず伝える。
-**mtb-plus 拡張が入っていれば（`mtb extensions list`）2 と 3 も API で済む**:
+**mtb-pro 拡張が入っていれば（`mtb extensions list`）2 と 3 も API で済む**:
 `mtb users api-password issue <id>` と `mtb sites data-api update <site> --enabled true`。
 インストーラが作った最初のサイトは Data API が無効で始まり、システム管理者は素通り
 するので気づかない（一般ユーザーだけ中身の無い 403 になる）。

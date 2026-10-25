@@ -28,7 +28,7 @@ against staging and production, and only the profile tells them apart.
 
 Before writing, tag the work so it can be traced afterwards. mtb sends the text as
 the `X-MTB-Audit-Note` header on every request, and servers that keep an audit log
-(the MtbPlus plugin does) store it with each call:
+(the MtbPro plugin does) store it with each call:
 
 ```bash
 export MTB_AUDIT_NOTE="<what this task is, who asked, date>"

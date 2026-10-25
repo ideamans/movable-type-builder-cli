@@ -329,11 +329,11 @@ mtb api POST /sites/1/things --set thing.label=ラベル --set thing.note=@note.
 もそのまま効きます。
 
 ```bash
-mtb extensions install ./mtb-plugin-mtb-plus    # 入れる（設定ディレクトリの extensions/ に写す）
+mtb extensions install ./mtb-plugin-pro    # 入れる（設定ディレクトリの extensions/ に写す）
 mtb extensions list                            # 一覧
-mtb extensions show mtb-plus                   # 足したコマンド・要る MT プラグイン
-mtb extensions check mtb-plus                  # MT 側にエンドポイントがあるか（無ければ終了コード 1）
-mtb extensions uninstall mtb-plus
+mtb extensions show mtb-pro                   # 足したコマンド・要る MT プラグイン
+mtb extensions check mtb-pro                  # MT 側にエンドポイントがあるか（無ければ終了コード 1）
+mtb extensions uninstall mtb-pro
 
 mtb sites entries author update 1 42 --author-name editor   # 拡張が足したコマンド
 ```
@@ -347,24 +347,24 @@ mtb sites entries author update 1 42 --author-name editor   # 拡張が足した
 拡張は**宣言だけ**でできたディレクトリで、コードは走りません。
 
 ```
-mtb-plugin-mtb-plus/
+mtb-plugin-pro/
 ├── mtb-extension.json        マニフェスト（名前・版・要る MT プラグインとエンドポイント）
 ├── spec.json                 追加するコマンドの定義（internal/spec/spec.json と同じ形）
 ├── llm.md                    mtb llm に足す章（任意）
-└── plugins/mtb-plus/         Claude Code のプラグイン（任意）
+└── plugins/mtb-pro/         Claude Code のプラグイン（任意）
 ```
 
 ```json
 {
-  "name": "mtb-plus",
+  "name": "mtb-pro",
   "version": "0.1.0",
   "description": "What only the admin screen can do",
   "descriptionJa": "管理画面でしかできない操作",
   "requires": {
-    "mtPlugin": { "name": "MtbPlus", "version": "0.1.0", "url": "https://..." },
+    "mtPlugin": { "name": "MtbPro", "version": "0.1.0", "url": "https://..." },
     "endpoints": ["update_entry_author", "upload_theme_file", "..."]
   },
-  "claudePlugin": "plugins/mtb-plus"
+  "claudePlugin": "plugins/mtb-pro"
 }
 ```
 
@@ -377,8 +377,8 @@ mtb-plugin-mtb-plus/
   `mtb extensions validate ./mtb-ext-xxx` で検査できます
 - `llm.md` は `mtb llm` の「拡張: <名前>」の章になります（見出しは1段下げて差し込みます）
 
-実例は [`mtb-plugin-mtb-plus`](https://github.com/ideamans/mtb-plugin-mtb-plus)（MT 側は
-[`mt-plugin-mtb-plus`](https://github.com/ideamans/mt-plugin-mtb-plus)）。
+実例は [`mtb-plugin-pro`](https://github.com/ideamans/mtb-plugin-pro)（MT 側は
+[`mt-plugin-mtb-pro`](https://github.com/ideamans/mt-plugin-mtb-pro)）。
 管理画面でしかできなかった操作（作成者・テーマの取り込み・書き出し設定・カスタムブロック・
 Webサービスパスワード・サイトの Data API 許可・アセットの差し替え・.js の配置）を16のコマンドにしています。
 
@@ -490,7 +490,7 @@ mtb sites entries update 6 309 --entry '{"title":"…"}' --verify-publish
 **誰が何をしたかを、あとで見直せるようにしておけます。** mtb は `User-Agent: mtb/<版>` を
 名乗り、`--audit-note`（または `MTB_AUDIT_NOTE`）の説明を `X-MTB-Audit-Note` ヘッダで
 送ります（日本語は UTF-8 をパーセントエンコード）。サーバが監査ログを取っていれば
-一緒に残ります（商用プラグイン MtbPlus は Data API の全呼び出しを記録し、
+一緒に残ります（商用プラグイン MtbPro は Data API の全呼び出しを記録し、
 `mtb audit-logs list --note …` で引けます）。取っていないサーバでは、ヘッダは無視されるだけです。
 
 ```bash

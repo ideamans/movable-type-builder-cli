@@ -79,7 +79,7 @@ mtb sites entries create --site-id 1 --entry @entry.json --fields id --compact
 
 **11. MT に書き込む作業の前に、`MTB_AUDIT_NOTE` に作業の説明を入れる。**
 全リクエストに `X-MTB-Audit-Note` ヘッダで付き、サーバが監査ログを取っていれば
-（MtbPlus など）一緒に残る。何十回と叩く作業でも、あとで「どの依頼の操作か」を引ける。
+（MtbPro など）一緒に残る。何十回と叩く作業でも、あとで「どの依頼の操作か」を引ける。
 mtb は `User-Agent: mtb/<版>` も名乗るので、Web サーバのログでも見分けられる。
 
 ```bash
@@ -265,8 +265,8 @@ DELETE と apply だけ）。サーバのファイルシステムに触れるな
 Git のファイルとして持ち、配置は rsync、適用と確認を mtb が受け持つのが
 一番きれい。**サイトから export するのではなく、ファイルからサイトを起こす。**
 
-**拡張 `mtb-plus` があれば rsync も要らない**（`mtb themes files upload <id> --dir <dir>`）。
-MT 側で `MtbPlusAllowFileUpload 1` が有効になっていることが条件（→「拡張」）。
+**拡張 `mtb-pro` があれば rsync も要らない**（`mtb themes files upload <id> --dir <dir>`）。
+MT 側で `MtbProAllowFileUpload 1` が有効になっていることが条件（→「拡張」）。
 
 ```
 theme.yaml / templates/*.mtml / blog_static/<フォルダ>/...
@@ -400,7 +400,7 @@ mtb が1ファイルずつ送っている（`--all` と同じ立場）。
   入れ替えるなら `--replace` を使う（送り先にある同名のアセットを消してから
   送る）。消すのは破壊的なので `--yes` が要る。**送り先まで一致したものだけ**を
   消すので、別フォルダの同名ファイルは巻き込まない。**消して上げ直すので ID が
-  変わる。** ID を保ちたいなら拡張 `mtb-plus` の `mtb sites assets replace`
+  変わる。** ID を保ちたいなら拡張 `mtb-pro` の `mtb sites assets replace`
 - **JS と HTML はアセットにできない。** MT の `DeniedAssetFileExtensions` が
   既定で拒否する（`js` `html` `htm` `shtml` ほか）。`'.js' is not allowed to
   upload by system settings.` が出たらこれ。**MT の作法ではスタイルシートと
@@ -419,7 +419,7 @@ jpg/jpeg/gif/png/js/css/ico/swf/flv に限られる。
 **Data API からは設定できない**（管理画面のテーマエクスポート画面で
 フォルダ名を1行ずつ入れて保存する）。保存が無くても `status` は `success` を
 返すので、空のテーマができたことに気づけない。**実機で確認済み。**
-拡張 `mtb-plus` があれば `mtb sites theme-export-settings update <site> --static-directories '["css"]'`。
+拡張 `mtb-pro` があれば `mtb sites theme-export-settings update <site> --static-directories '["css"]'`。
 **テーマを適用するとこの設定は消える**ので、書き出す直前に入れる。
 
     mtb sites export-theme 4 --theme-id my-theme --theme-name "My Theme" \
@@ -635,9 +635,9 @@ mtb roles list --fields id,name                                   # ロールID�
 2. **Webサービスパスワード** — `password`（サインイン用）とは別物。
    **MT が自動生成するもので、Data API からは設定も取得もできない。**
    管理画面のユーザー編集で [新しいパスワードを発行] を押し、出た値を控える
-   （拡張 `mtb-plus` があれば `mtb users api-password issue <id>`）
+   （拡張 `mtb-pro` があれば `mtb users api-password issue <id>`）
 3. **サイト側で Data API が許可されていること** — サイト設定 → Web サービス
-   （拡張 `mtb-plus` があれば `mtb sites data-api update <site> --enabled true`）。
+   （拡張 `mtb-pro` があれば `mtb sites data-api update <site> --enabled true`）。
    **インストーラが作った最初のサイトは無効で始まる。** システム管理者は素通り
    するので気づかず、一般ユーザーだけが中身の無い `403 Forbidden` を受ける
 
@@ -648,9 +648,9 @@ mtb roles list --fields id,name                                   # ロールID�
 2つの道がある。
 
 - **その人のプロファイルでサインインする**（下の例）。その人の Webサービスパスワードが要る
-- **拡張 `mtb-plus` で作ってから作成者を変える**（`mtb sites entries author update`）。
-  MT 側に MtbPlus プラグインが要る。入っているかは `mtb extensions list` と
-  `mtb extensions check mtb-plus` で分かる（→「拡張」）
+- **拡張 `mtb-pro` で作ってから作成者を変える**（`mtb sites entries author update`）。
+  MT 側に MtbPro プラグインが要る。入っているかは `mtb extensions list` と
+  `mtb extensions check mtb-pro` で分かる（→「拡張」）
 
 ```bash
 mtb profile add mt-editor --base-url http://example.com/cgi-bin/mt/mt-data-api.cgi
@@ -828,8 +828,8 @@ MT は何もしないので、ファイルは古いままになる。実際に�
 | 記事のタイトルの `—` が `--` や `&#8212;` になった | **作成のときだけ記号が書き換わる**（更新では起きない） | 作成したあとに同じ値で更新し直す。`smartReplace=1` にしても原文のままにはならない |
 | 空の更新をしたら URL が変わった | `{}` でフォルダ・カテゴリが外れた | 変更する項目だけを書いて送る |
 | 数値のはずのIDで 404 | パスに変な値が入った | mtb が手元で弾くので、その文言を読む |
-| API で作ったユーザーがサインインできない | `sign_in_data_api` 権限・Webサービスパスワード・サイトの Data API 許可のどれかが欠けている | 権限は API で付く。あとの2つは管理画面か、拡張 `mtb-plus` |
-| 一般ユーザーだけ中身の無い `403 Forbidden` | そのサイトの Data API が無効（システム管理者は素通りする） | サイト設定 → Web サービス。拡張 `mtb-plus` なら `mtb sites data-api get` で確かめられる |
+| API で作ったユーザーがサインインできない | `sign_in_data_api` 権限・Webサービスパスワード・サイトの Data API 許可のどれかが欠けている | 権限は API で付く。あとの2つは管理画面か、拡張 `mtb-pro` |
+| 一般ユーザーだけ中身の無い `403 Forbidden` | そのサイトの Data API が無効（システム管理者は素通りする） | サイト設定 → Web サービス。拡張 `mtb-pro` なら `mtb sites data-api get` で確かめられる |
 | `permutate` が 400 | id だけの配列を渡した | list の出力をそのまま並べ替えて渡す |
 | `500 malformed JSON string` | `@ファイル名` が展開されず届いた | 文字列の項目では展開されない。警告が出ていないか見る |
 | コンテンツデータが `"Data Label" is required.` | label を書いていない | `label` はフィールドではなくデータ自体の名前 |
@@ -841,10 +841,10 @@ MT は何もしないので、ファイルは古いままになる。実際に�
 | 取り込みで `Invalid encoding` | 有効な値は MT の言語設定次第 | 英語環境は `utf8`、日本語環境は `sjis` など。既定の `guess` に任せるのが早い |
 | `--cd-search 1` で 500 | MT の不具合（並び順の列名が壊れる） | `--search-sort-by` を一緒に渡す |
 | `--publish 0` にしたのに公開されている | これは再構築の抑止で、ステータスではない | 下書きにするなら `status` を `Draft` に |
-| 記事の著者を変えたのに変わらない | `author` は読み取り専用。**200 が返って黙って無視される** | 本体では変えられない。拡張 `mtb-plus` の `mtb sites entries author update` |
-| `409 A file named '...' already exists.` | MT はアセットを上書きできない | `--replace` で消してから送る（ID が変わる）。ID を保つなら拡張 `mtb-plus` の `sites assets replace`。`--auto-rename-if-exists` は名前がハッシュになる |
-| `'.js' is not allowed to upload by system settings.` | `DeniedAssetFileExtensions` の既定が `js` `html` などを拒否 | MT の作法どおり**インデックステンプレート**で置く。ビルド済みの JS をそのまま置くなら拡張 `mtb-plus` の `sites files upload` |
-| テーマのエクスポートが `success` なのに中身が空 | 静的ファイルの対象フォルダがサイトに保存されていない | 管理画面のテーマエクスポート画面でフォルダ名を保存する（本体の API からは設定できない）。拡張 `mtb-plus` の `sites theme-export-settings update`。テーマの適用で消える |
+| 記事の著者を変えたのに変わらない | `author` は読み取り専用。**200 が返って黙って無視される** | 本体では変えられない。拡張 `mtb-pro` の `mtb sites entries author update` |
+| `409 A file named '...' already exists.` | MT はアセットを上書きできない | `--replace` で消してから送る（ID が変わる）。ID を保つなら拡張 `mtb-pro` の `sites assets replace`。`--auto-rename-if-exists` は名前がハッシュになる |
+| `'.js' is not allowed to upload by system settings.` | `DeniedAssetFileExtensions` の既定が `js` `html` などを拒否 | MT の作法どおり**インデックステンプレート**で置く。ビルド済みの JS をそのまま置くなら拡張 `mtb-pro` の `sites files upload` |
+| テーマのエクスポートが `success` なのに中身が空 | 静的ファイルの対象フォルダがサイトに保存されていない | 管理画面のテーマエクスポート画面でフォルダ名を保存する（本体の API からは設定できない）。拡張 `mtb-pro` の `sites theme-export-settings update`。テーマの適用で消える |
 | `mtb sites themes apply` が `--yes` だけで通らない | テンプレートの総入れ替えなので `--confirm <サイト名>` も要る | 対象を確かめてから名前を打つ |
 | アップロードが `500 unable to write to the "Upload Destination"` | サイトの配置先がウェブサーバから書けない | `mtb sites get <ID> --fields sitePath` の場所の権限を見る |
 
@@ -856,9 +856,9 @@ MT は何もしないので、ファイルは古いままになる。実際に�
 
 ```bash
 mtb extensions list                       # 入っている拡張と、読み込めたか
-mtb extensions show mtb-plus              # 足したコマンド・要る MT プラグイン
-mtb extensions check mtb-plus             # その MT に要るエンドポイントがあるか
-mtb extensions install ./mtb-plugin-mtb-plus   # 入れる（ディレクトリを写す）
+mtb extensions show mtb-pro              # 足したコマンド・要る MT プラグイン
+mtb extensions check mtb-pro             # その MT に要るエンドポイントがあるか
+mtb extensions install ./mtb-plugin-pro   # 入れる（ディレクトリを写す）
 ```
 
 - **拡張ごとの使い方は `mtb llm` の「拡張: <名前>」の章にある。** 拡張のコマンドは

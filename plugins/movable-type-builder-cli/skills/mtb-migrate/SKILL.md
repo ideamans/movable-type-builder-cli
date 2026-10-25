@@ -196,7 +196,7 @@ mtb sites templates update <site> <tid> --profile prod --set template.text=@prod
   作成時の著者は**サインインしている利用者**になるので、運んだ記事は
   すべて「運んだ人」のものになる。元の著者を保ちたいなら、その人の
   プロファイルでサインインして運ぶしかない（人数分プロファイルが要る）。
-  **mtb-plus 拡張があれば、運んでから `mtb sites entries author update <site> <id>
+  **mtb-pro 拡張があれば、運んでから `mtb sites entries author update <site> <id>
   --author-name <名前>` で直せる**（ID は環境で違うので名前で指定する）。
   ダンプは著者を出すので、**差分を見れば誰のものになったか分かる**
 
@@ -242,8 +242,8 @@ diff -ru ./dump/prod-after ./dump/stg
 **テーマを外から MT に入れる経路は Data API に無い。** `/themes` は GET と
 DELETE と apply だけで、install も upload も無い（実機の 266 個を確認）。
 入れるにはサーバのファイルシステムか管理画面しかない。
-**mtb-plus 拡張があれば `mtb themes files upload <id> --dir <dir>` で送れる**
-（MT 側で `MtbPlusAllowFileUpload 1` が有効なとき）。
+**mtb-pro 拡張があれば `mtb themes files upload <id> --dir <dir>` で送れる**
+（MT 側で `MtbProAllowFileUpload 1` が有効なとき）。
 
 **触れるなら、これが一番きれいな進め方。** テーマを Git のファイルとして持ち、
 配置は rsync、適用と確認は mtb が受け持つ。
