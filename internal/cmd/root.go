@@ -136,6 +136,7 @@ func New(env *Env, args ...string) *App {
 		a.newAuthCmd(),
 		a.newProfileCmd(),
 		a.newAPICmd(),
+		a.newCallCmd(),
 		a.newDumpCmd(),
 		a.newExtensionsCmd(),
 	)

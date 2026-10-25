@@ -25,7 +25,7 @@ cobra のツリーを組み立てる。生成されるのは 220 コマンド / 
 マニュアルへのリンクだけ。**マニュアルや定義の文を写して説明を補わないこと**
 （要約は自分の言葉で書く）。OSS として公開するための前提。
 
-手書きなのは `auth` / `profile` / `api` / `llm` / `dump` / `extensions` と、生成された
+手書きなのは `auth` / `profile` / `api` / `call` / `llm` / `dump` / `extensions` と、生成された
 `sites templates` に足した `pull` / `push` だけ。**後者はエンドポイントでは
 ない**——Data API に一括の取り出し／書き戻しが無いので、mtb が list と update
 を回している（`--all` や `--dir` と同じ立場）。利用者はテンプレートの操作を

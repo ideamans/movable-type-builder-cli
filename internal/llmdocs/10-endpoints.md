@@ -44,6 +44,7 @@ POST   /v7/groups/{group_id}/permissions/grant            mtb groups permissions
 | `mtb auth login` / `logout` / `refresh` / `status` | `/authentication` `/token` を包んだもの |
 | `mtb profile ...` | 接続先の設定。MT には送らない |
 | `mtb api <メソッド> <パス>` | 任意のエンドポイントを直接叩く逃げ道 |
+| `mtb call <エンドポイントID>` | エンドポイント ID で呼ぶ（経路はサーバの `/endpoints` から。`--describe` でパラメータ） |
 | `mtb llm` | 埋め込みリファレンスの表示 |
 | `mtb sites templates pull` / `push` | 一覧と更新を回してディレクトリと往復させる |
 | `mtb extensions ...` | mtb の拡張の管理。MT には送らない（`check` だけが `/endpoints` を読む） |

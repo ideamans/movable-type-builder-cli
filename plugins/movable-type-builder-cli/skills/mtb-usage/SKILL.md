@@ -258,7 +258,16 @@ are different claims.
 | 405 | Retry with `--method-override` (a proxy is blocking PUT/DELETE) |
 | HTML instead of JSON | Same as 404: the base URL points at the admin screen |
 
-For an endpoint the CLI does not know (a plugin's with no extension, or a newer MT):
+For an endpoint the CLI does not know (a plugin's with no extension, or a newer MT),
+call it by its endpoint ID and let the server tell you the parameters:
+
+```bash
+mtb endpoints list --fields id,verb,route,component   # find the ID
+mtb call <endpoint-id> --describe                     # parameters, from the server's own definition
+mtb call <endpoint-id> 1 42 --form name=value         # path values in route order
+```
+
+Or with an explicit path:
 
 ```bash
 mtb endpoints list                       # what this server actually offers

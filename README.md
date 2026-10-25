@@ -317,6 +317,17 @@ mtb api GET /sites/1/things --all --fields id,label
 mtb api POST /sites/1/things --set thing.label=ラベル --set thing.note=@note.txt
 ```
 
+**パスを組み立てずに、エンドポイント ID で呼ぶこともできます**（`mtb call`）。経路とメソッドは
+サーバの `/endpoints` から、パラメータはサーバ自身の OpenAPI 定義から引くので、拡張の無い
+プラグインのエンドポイントでも `--describe` で何を渡せばよいかが分かります。
+
+```bash
+mtb endpoints list --fields id,verb,route,component     # ID を調べる
+mtb call update_thing --describe                         # パラメータをサーバに聞く
+mtb call update_thing 1 42 --form label=新しい名前        # :site_id :thing_id を順に埋める
+mtb call update_thing 42 --path site_id=1 --dry-run      # 名前で渡す・送らずに確かめる
+```
+
 検証に使った MT では、246 が Core、20 がプラグイン由来でした
 （Professional Pack 5 / Comments 10 / FormattedText 5）。**カスタムフィールドや
 コメントも、実はプラグインが足したエンドポイント**です。
@@ -374,7 +385,10 @@ mtb-plugin-pro/
 - 既存のコマンドとぶつかる拡張は丸ごと読み込まれません
 - `requires.endpoints` は MT の `/endpoints` に出る ID です。`mtb extensions check` が使います
 - 作っている間は `MTB_EXTENSIONS_PATH=./mtb-ext-xxx mtb ...` で入れずに試せます。
-  `mtb extensions validate ./mtb-ext-xxx` で検査できます
+  `mtb extensions validate ./mtb-ext-xxx` で検査できます。`--strict` を付けると、同梱の
+  Claude Code のプラグインの問題（版の不一致・スキルの書式）も失敗にします（拡張の CI 向け）
+- 送るものの確かめ方は `--dry-run` の出力を期待値と突き合わせるのが手堅い（実例は
+  mtb-plugin-pro の `tests/dry_run.py`）
 - `llm.md` は `mtb llm` の「拡張: <名前>」の章になります（見出しは1段下げて差し込みます）
 
 実例は [`mtb-plugin-pro`](https://github.com/ideamans/mtb-plugin-pro)（MT 側は

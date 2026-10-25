@@ -872,6 +872,7 @@ mtb extensions install ./mtb-plugin-pro   # 入れる（ディレクトリを写
   一部だけ入ることはない
 - 開発中の拡張は `MTB_EXTENSIONS_PATH`（`:` 区切りのディレクトリ）で入れずに読める。
   インストール済みの同名のものより優先される。`mtb extensions validate <dir>` で検査できる
+  （`--strict` で同梱の Claude Code のプラグインの版と書式も失敗にする）
 - 拡張は JSON と Markdown だけで、**コードは走らない**。拡張に Claude Code の
   プラグインが同梱されていれば `mtb extensions show` がその場所を示す
 
@@ -888,6 +889,19 @@ mtb api GET /sites/1/things --all --fields id,label
 mtb api POST /sites/1/things --set thing.label=ラベル --set thing.note=@note.txt
 mtb api POST /sites/1/assets/upload --file ./photo.jpg --form path=/2026
 ```
+
+**パスを組み立てずにエンドポイント ID で呼ぶなら `mtb call`。** 経路とメソッドはサーバの
+`/endpoints` から引く。拡張の無いプラグインのエンドポイントは、まずこちら。
+
+```bash
+mtb call <エンドポイントID> --describe              # パラメータをサーバの OpenAPI 定義から表示
+mtb call <エンドポイントID> 1 42 --form name=value  # パスの値は経路に出てくる順（--path 名前=値 も可）
+```
+
+- `--describe` はサーバが返す説明をそのまま出す（プラグインが openapi_handler を持っていれば）
+- 同じ ID が版違いで並ぶときは新しい版を採る。メソッドや経路が違うものが並ぶと断る（そのときは `mtb api`）
+- `site_id` が足りなければプロファイルの既定サイトを使う。`--dry-run` でも経路を引くために1回問い合わせる
+- DELETE は `mtb api` と同じく確認が要る（`--yes`）
 
 **`--all` `--fields` `--set` `--set-json` は生成コマンドと同じように使える。**
 プラグインが足したエンドポイントこそ、ページ繰りと本体の組み立てが要る。

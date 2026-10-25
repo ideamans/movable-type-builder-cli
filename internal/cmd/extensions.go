@@ -366,14 +366,20 @@ func (a *App) writeExtension(e *extension.Extension) {
 }
 
 func (a *App) newExtensionsValidateCmd() *cobra.Command {
-	return &cobra.Command{
+	var strict bool
+	cmd := &cobra.Command{
 		Use:   "validate <directory>",
 		Short: i18n.T("拡張のディレクトリを検査する（入れはしない）", "Check an extension directory without installing it"),
 		Long: i18n.T(
 			"マニフェストと定義を読み、既存のコマンドとぶつからないかまで確かめます。\n"+
-				"拡張を作るときに使います。",
+				"同梱の Claude Code のプラグインも見ます（版が拡張と一致するか、スキルの書式）。\n"+
+				"拡張を作るときと、拡張の CI で使います。\n\n"+
+				"--strict を付けると、Claude Code のプラグインの問題も失敗にします（既定は警告）。",
 			"Reads the manifest and the definition and checks that nothing collides with\n"+
-				"the existing commands. Use it while writing an extension."),
+				"the existing commands. Also checks the bundled Claude Code plugin (its version\n"+
+				"matches the extension's, and the skills are well formed). Use it while writing\n"+
+				"an extension and in its CI.\n\n"+
+				"With --strict, problems in the Claude Code plugin fail too (they warn by default)."),
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			e, err := a.loadExtensionDir(args[0])
@@ -383,12 +389,43 @@ func (a *App) newExtensionsValidateCmd() *cobra.Command {
 			if err := a.checkExtension(e, e.Name); err != nil {
 				return err
 			}
+			problems := a.lintExtension(e)
+			for _, p := range problems {
+				fmt.Fprintln(a.env.Err, i18n.T("警告:", "warning:"), p)
+			}
+			if strict && len(problems) > 0 {
+				return fmt.Errorf(i18n.T(
+					"%s: %d 件の問題があります（--strict）",
+					"%s: %d problems (--strict)"), e.Name, len(problems))
+			}
 			fmt.Fprintf(a.env.Out, i18n.T(
 				"%s %s: 問題ありません（コマンド %d）\n",
 				"%s %s: OK (%d commands)\n"), e.Name, e.Version, len(e.Spec.Commands))
 			return nil
 		},
 	}
+	cmd.Flags().BoolVar(&strict, "strict", false, i18n.T(
+		"Claude Code のプラグインの問題も失敗にする（拡張の CI 向け）",
+		"fail on problems in the Claude Code plugin too (for an extension's CI)"))
+	return cmd
+}
+
+// lintExtension は読み込みには差し支えない問題を集めます。
+func (a *App) lintExtension(e *extension.Extension) []string {
+	var problems []string
+	for _, sc := range e.Spec.Commands {
+		if strings.TrimSpace(sc.Short) == "" {
+			problems = append(problems, fmt.Sprintf(i18n.T(
+				"%s に short（一覧に出る1行）がありません",
+				"%s has no short (the line shown in listings)"), strings.Join(sc.Command, " ")))
+		}
+	}
+	if dir := e.ClaudePluginDir(); dir != "" && a.env.CheckClaudePlugin != nil {
+		for _, p := range a.env.CheckClaudePlugin(dir, e.Version) {
+			problems = append(problems, "Claude Code plugin: "+p)
+		}
+	}
+	return problems
 }
 
 func (a *App) newExtensionsInstallCmd() *cobra.Command {

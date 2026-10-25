@@ -298,3 +298,25 @@ func TestExtensionFileUploadGetsDirButNotReplace(t *testing.T) {
 		t.Error("sites assets upload から --replace が消えています")
 	}
 }
+
+// --strict は同梱の Claude Code のプラグインの問題も失敗にする（既定は警告）。
+func TestExtensionsValidateStrictFailsOnClaudePluginProblems(t *testing.T) {
+	h := newHarness(t, withExtensionFiles("/src/ext", testExtManifest, testExtSpec))
+	var gotDir, gotVersion string
+	h.env.CheckClaudePlugin = func(dir, version string) []string {
+		gotDir, gotVersion = dir, version
+		return []string{"plugin.json version 0.0.9 != 0.1.0"}
+	}
+	if err := h.run("extensions", "validate", "/src/ext"); err != nil {
+		t.Fatalf("既定では警告で通るはず: %v", err)
+	}
+	if !strings.Contains(h.errOut.String(), "0.0.9") {
+		t.Errorf("警告が出ていません: %q", h.errOut.String())
+	}
+	if gotDir != "/src/ext/plugins/mtb-entry-author" || gotVersion != "0.1.0" {
+		t.Errorf("検査に渡したもの = %q %q", gotDir, gotVersion)
+	}
+	if err := h.run("extensions", "validate", "/src/ext", "--strict"); err == nil || !strings.Contains(err.Error(), "--strict") {
+		t.Errorf("--strict で失敗していません: %v", err)
+	}
+}

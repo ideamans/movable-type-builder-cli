@@ -8,6 +8,8 @@ import (
 	"sort"
 	"time"
 
+	"github.com/ideamans/go-llm-cli-kit/skillcheck"
+
 	"github.com/ideamans/movable-type-builder-cli/internal/api"
 	"github.com/ideamans/movable-type-builder-cli/internal/config"
 	"github.com/ideamans/movable-type-builder-cli/internal/extension"
@@ -59,6 +61,9 @@ type Env struct {
 	ExtensionsDir string
 	// RemoveAll はディレクトリを丸ごと消します。拡張の入れ直しと外すときに使います。
 	RemoveAll func(path string) error
+	// CheckClaudePlugin は拡張に同梱した Claude Code のプラグインを検査し、問題を返します
+	// （版が拡張と一致するか、スキルの書式）。nil なら検査しません。
+	CheckClaudePlugin func(dir, version string) []string
 	// DotEnvPath は読み込んだ .env の場所です。読んでいなければ空。
 	// 表示のためだけに持ちます（mtb profile show）。
 	DotEnvPath string
@@ -122,6 +127,9 @@ func DefaultEnv() (*Env, error) {
 		return os.ReadFile(name)
 	}
 	env.RemoveAll = os.RemoveAll
+	env.CheckClaudePlugin = func(dir, version string) []string {
+		return skillcheck.CheckDir(dir, skillcheck.Options{Version: version}).Problems
+	}
 	if dir, err := config.DefaultDir(environ, os.UserHomeDir); err == nil {
 		env.ExtensionsDir = filepath.Join(dir, "extensions")
 	}

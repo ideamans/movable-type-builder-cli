@@ -41,6 +41,7 @@ Assets
 - `mtb auth logout` — サインアウトしてセッションを無効にする
 - `mtb auth refresh` — アクセストークンを取り直す
 - `mtb auth status` — いまの接続先と認証状態を表示する
+- `mtb call <エンドポイントID> [パスの値...]` `[--all --describe --fields --file --form --no-auth --path --query --set --set-json]` — エンドポイント ID で任意のエンドポイントを呼ぶ（拡張の無いプラグイン向け）
 - `mtb dump` `[--asset-hash --dir --sites]` — MT の中身をディレクトリに YAML で書き出す（差分を取るため）
 
 ## `mtb endpoints`
@@ -58,7 +59,7 @@ mtb の拡張（MT プラグインが足したエンドポイントのコマン�
 - `mtb extensions list` — 拡張の一覧
 - `mtb extensions show <name>` — 拡張の中身（コマンド・要る MT プラグイン・Claude Code のプラグイン）
 - `mtb extensions uninstall <name>` — 拡張を外す
-- `mtb extensions validate <directory>` — 拡張のディレクトリを検査する（入れはしない）
+- `mtb extensions validate <directory>` `[--strict]` — 拡張のディレクトリを検査する（入れはしない）
 
 ## `mtb groups`
 
