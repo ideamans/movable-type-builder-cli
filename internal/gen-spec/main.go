@@ -283,11 +283,13 @@ var themeIncludeNote = note{
 	ja: "カンマ区切りで複数指定する。" +
 		"blog_static_files は、対象フォルダが管理画面で保存されていないと" +
 		"何も含まれない（status は success を返すので気づけない）。" +
-		"サイトの theme_export_settings に入るもので、API からは設定できない",
+		"サイトの theme_export_settings に入るもので、本体の API からは設定できない" +
+		"（拡張 mtb-pro があれば sites theme-export-settings update。テーマの適用で消える）",
 	en: "Pass several values separated by commas. " +
 		"blog_static_files includes nothing unless the target folders have been saved " +
 		"from the admin screen (the status still comes back as success, so it is easy to miss). " +
-		"They live in the site's theme_export_settings, which the API cannot set.",
+		"They live in the site's theme_export_settings, which MT's own API cannot set " +
+		"(with the mtb-pro extension: sites theme-export-settings update; applying a theme clears it).",
 }
 
 // customFieldNote はカスタムフィールドの型と対象。MT は不正な値に対して

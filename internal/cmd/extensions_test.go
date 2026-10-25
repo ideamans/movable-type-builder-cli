@@ -105,6 +105,22 @@ func TestExtensionNotFoundPointsAtTheMTPlugin(t *testing.T) {
 	}
 }
 
+// プラグインが返した 404（対象が無い）に「プラグインが無いかも」を足すと、
+// 入っているのに疑わせることになる。実地テストで File not found に付いていた。
+func TestExtensionNotFoundFromThePluginDoesNotBlameThePlugin(t *testing.T) {
+	h := newExtensionHarness(t).reply(stub{status: 404, body: `{"error":{"code":404,"message":"Entry not found"}}`, contentType: "application/json"})
+	err := h.run("sites", "entries", "author", "update", "1", "42", "--author-id", "3")
+	if err == nil {
+		t.Fatal("404 なのに成功しました")
+	}
+	if strings.Contains(err.Error(), "プラグインが入っていない") {
+		t.Errorf("対象が無いだけの 404 にプラグインの助言が付いています: %v", err)
+	}
+	if code := ExitCode(err); code != ExitNotFound {
+		t.Errorf("終了コード = %d, want %d", code, ExitNotFound)
+	}
+}
+
 func TestExtensionThatCollidesIsNotLoadedAtAll(t *testing.T) {
 	cases := map[string]string{
 		// 生成コマンドとぶつかる

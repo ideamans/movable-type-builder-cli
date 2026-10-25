@@ -53,7 +53,16 @@ func (e *Error) Forbidden() bool { return e.Status == http.StatusForbidden }
 // NotFound は対象が無いかどうかです。
 func (e *Error) NotFound() bool { return e.Status == http.StatusNotFound }
 
+// UnknownEndpoint は「そのパスのエンドポイントが MT に無い」404 かどうかです。
+// 対象が無い 404（Site not found など）とは助言が違います。
+func (e *Error) UnknownEndpoint() bool {
+	return e.NotFound() && (e.Message == "" || e.Message == "Unknown endpoint")
+}
+
 // Hint は次に何をすればよいかの助言です。無ければ空文字を返します。
+//
+// MT のメッセージで出し分けます。同じ 403 でも、中身の無い "Forbidden" は
+// たいていサイトの Data API が無効なせいで、ロールを見直しても直りません。
 func (e *Error) Hint() string {
 	switch e.Status {
 	case http.StatusUnauthorized:
@@ -61,6 +70,16 @@ func (e *Error) Hint() string {
 			"セッションが切れている可能性があります。mtb auth login をやり直してください。",
 			"The session may have expired. Sign in again with: mtb auth login")
 	case http.StatusForbidden:
+		switch {
+		case e.Message == "" || e.Message == "Forbidden":
+			return i18n.T(
+				"そのサイトの Data API が無効になっている可能性があります（新しく作ったサイトは無効で始まり、システム管理者だけが素通りします）。管理画面のサイトの設定「Webサービス」で有効にしてください（mtb-pro があれば mtb sites data-api update <サイトID> --enabled true）。有効なら、このユーザーのロールを確認してください。",
+				"The site's Data API may be disabled (new sites start disabled and only system administrators bypass it). Enable it in the site's Web Services settings in the admin screen (with mtb-pro: mtb sites data-api update <site-id> --enabled true). If it is enabled, check this user's role.")
+		case strings.Contains(e.Message, "system administrator"):
+			return i18n.T(
+				"システム管理者だけができる操作です。ロールでは足りないので、システム管理者のプロファイルで実行してください。",
+				"Only a system administrator can do this; no role is enough. Run it with a system administrator's profile.")
+		}
 		return i18n.T(
 			"このユーザーには権限がありません。MT の管理画面でロールを確認してください。",
 			"This user lacks the permission. Check their role in the Movable Type admin screen.")
@@ -69,9 +88,14 @@ func (e *Error) Hint() string {
 			"PUT / DELETE が前段で止められている可能性があります。--method-override を付けて試してください。",
 			"Something in front may be blocking PUT/DELETE. Try again with --method-override.")
 	case http.StatusNotFound:
+		if e.UnknownEndpoint() {
+			return i18n.T(
+				"MT にそのエンドポイントがありません。ベースURL（mt-data-api.cgi まで含めるか）とパスを確認してください。",
+				"MT has no such endpoint. Check the base URL (it must reach mt-data-api.cgi) and the path.")
+		}
 		return i18n.T(
-			"パスとIDを確認してください。ベースURLの間違い（mt-data-api.cgi まで含めるか）も 404 になります。",
-			"Check the path and the IDs. A wrong base URL (it must reach mt-data-api.cgi) also returns 404.")
+			"指定した対象がありません。ID・パス・サイトの取り違えを確認してください。",
+			"The target does not exist. Check the IDs, the path and that it is the right site.")
 	}
 	return ""
 }

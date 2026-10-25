@@ -252,9 +252,11 @@ are different claims.
 | --- | --- |
 | 401 on login | Ask the user to check the *web services* password |
 | 401 mid-session | `mtb auth login` again; the session expired |
-| 403 | Permission, not a bug. Report which operation and let the user fix the role |
-| 404 with a path that looks right | `mtb profile show` — the base URL is probably wrong |
-| 404 from an extension's command | The MT plugin behind it is missing: `mtb extensions check <name>` |
+| 403 with a message | Permission, not a bug. Report which operation and let the user fix the role (`Only a system administrator`: no role is enough) |
+| 403 `Forbidden` with no message | The site's Data API is off (every new site starts that way); not a role problem |
+| 404 `Unknown endpoint` | `mtb profile show` — the base URL is probably wrong, or that MT lacks the endpoint |
+| 404 `Unknown endpoint` from an extension's command | The MT plugin behind it is missing: `mtb extensions check <name>` |
+| 404 with another message (`Site not found` …) | The endpoint exists; the ID or site is wrong |
 | 405 | Retry with `--method-override` (a proxy is blocking PUT/DELETE) |
 | HTML instead of JSON | Same as 404: the base URL points at the admin screen |
 

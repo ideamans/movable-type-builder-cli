@@ -72,3 +72,19 @@ func TestAPISetLayersOnForm(t *testing.T) {
 		t.Errorf("重ね方が違います: %s", got)
 	}
 }
+
+// 拡張の一覧は items と totalResults のほかに、解釈した条件などを添えることが
+// ある（mtb-pro の監査ログは range を返す）。畳んだり絞ったりで落とさない。
+func TestListKeepsOtherTopLevelKeys(t *testing.T) {
+	h := newHarness(t).reply(
+		okJSON(`{"totalResults":2,"range":{"since":"2026-10-25T15:00:00Z"},"items":[{"id":1,"x":1}]}`),
+		okJSON(`{"totalResults":2,"range":{"since":"2026-10-25T15:00:00Z"},"items":[{"id":2,"x":2}]}`),
+	)
+	out := h.mustRun("api", "GET", "/auditLogs", "--all", "--fields", "id")
+	if !strings.Contains(out, `"range"`) || !strings.Contains(out, "2026-10-25T15:00:00Z") {
+		t.Errorf("range が落ちました:\n%s", out)
+	}
+	if strings.Contains(out, `"x"`) || !strings.Contains(out, `"totalResults": 2`) {
+		t.Errorf("items の絞り込みか件数が違います:\n%s", out)
+	}
+}

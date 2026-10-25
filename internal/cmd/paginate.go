@@ -61,6 +61,9 @@ func (a *App) fetchAll(ctx context.Context, client *api.Client, req api.Request,
 		items []json.RawMessage
 		total int
 		last  *api.Response
+		// extra は items と totalResults 以外の上位のキー（最初のページのもの）。
+		// 拡張の一覧は解釈した条件などを添えることがあり、畳むときに落とさない。
+		extra map[string]json.RawMessage
 	)
 	for page := 0; ; page++ {
 		if page >= maxPages {
@@ -95,6 +98,9 @@ func (a *App) fetchAll(ctx context.Context, client *api.Client, req api.Request,
 		}
 		if page == 0 {
 			total = pageDoc.TotalResults
+			_ = json.Unmarshal(resp.Body, &extra)
+			delete(extra, "items")
+			delete(extra, "totalResults")
 		}
 		if len(pageDoc.Items) == 0 {
 			break
@@ -116,7 +122,11 @@ func (a *App) fetchAll(ctx context.Context, client *api.Client, req api.Request,
 			"警告: サーバは %d 件と申告していますが、取得できたのは %d 件です\n",
 			"Warning: the server reports %d items but only %d were retrieved\n"), total, len(items))
 	}
-	body, err := json.Marshal(map[string]any{"items": items, "totalResults": len(items)})
+	doc := map[string]any{"items": items, "totalResults": len(items)}
+	for k, v := range extra {
+		doc[k] = v
+	}
+	body, err := json.Marshal(doc)
 	if err != nil {
 		return nil, err
 	}

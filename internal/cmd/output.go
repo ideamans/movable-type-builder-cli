@@ -216,7 +216,8 @@ func splitFields(s string) []string {
 }
 
 // pickFields は JSON から指定した属性だけを残します。items を持つ一覧の
-// 応答では、items の各要素を絞り、totalResults は残します。
+// 応答では、items の各要素を絞り、上位のほかのキー（totalResults や、拡張が
+// 添える解釈した条件など）は残します。
 //
 // 2つ目の戻り値は「1つも一致しなかったときに、その応答が実際に持っている
 // 属性名」です。一致したときは空を返します。
@@ -250,10 +251,11 @@ func pickFields(body []byte, fields []string) ([]byte, []string, error) {
 			}
 			picked = append(picked, got)
 		}
-		out := map[string]any{"items": picked}
-		if total, ok := doc["totalResults"]; ok {
-			out["totalResults"] = total
+		out := map[string]any{}
+		for k, v := range doc {
+			out[k] = v
 		}
+		out["items"] = picked
 		buf, err := json.Marshal(out)
 		return buf, missReport(matched, sample), err
 	}

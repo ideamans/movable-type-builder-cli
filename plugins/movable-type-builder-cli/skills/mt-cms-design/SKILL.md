@@ -83,8 +83,9 @@ mtb sites permissions grant --site-id 4 --user-id 2 --role-id 2
 ユーザーを作ったら、2 と 3 が管理画面の作業として残ることを必ず伝える。
 **mtb-pro 拡張が入っていれば（`mtb extensions list`）2 と 3 も API で済む**:
 `mtb users api-password issue <id>` と `mtb sites data-api update <site> --enabled true`。
-インストーラが作った最初のサイトは Data API が無効で始まり、システム管理者は素通り
-するので気づかない（一般ユーザーだけ中身の無い 403 になる）。
+**新しいサイトは Data API が無効で始まる**（インストーラが作った最初のサイトも、
+API で作ったサイトも）。システム管理者は素通りするので気づかない（一般ユーザーだけ
+中身の無い 403 になる）。サイトを足す設計なら、編集者を入れる前に許可する手順を含める。
 
 ## 5. 出力の形を決める
 

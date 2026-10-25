@@ -284,6 +284,12 @@ theme.yaml / templates/*.mtml / blog_static/<フォルダ>/...
 テンプレートを作り込んだ後に当てると URL 設計ごとやり直しになる。
 マニュアルの適用ページに警告は無い。
 
+- **当て直すとテンプレートは作り直され、ID が変わる。** ID を控えていたら引き直す
+- **テーマのファイルを直しただけでは、適用済みのサイトは変わらない。** 当て直して初めて効く
+- **テンプレートを名前で探さない。** テーマの `name: Main Index` は MT の言語で訳されて
+  「メインページ」になる。`sites templates list` の `templateType`（index・archive など）か
+  ID で引く（Data API のテンプレートには `identifier` が出ない）
+
 `mtb sites themes apply` は `--yes` に加えて `--confirm <サイト名>` を要求する。
 
 ## 本文の書式（ここが一番危ない）
@@ -638,8 +644,10 @@ mtb roles list --fields id,name                                   # ロールID�
    （拡張 `mtb-pro` があれば `mtb users api-password issue <id>`）
 3. **サイト側で Data API が許可されていること** — サイト設定 → Web サービス
    （拡張 `mtb-pro` があれば `mtb sites data-api update <site> --enabled true`）。
-   **インストーラが作った最初のサイトは無効で始まる。** システム管理者は素通り
-   するので気づかず、一般ユーザーだけが中身の無い `403 Forbidden` を受ける
+   **新しいサイトは無効で始まる**（インストーラが作った最初のサイトも、
+   `mtb sites create` で作ったサイトも）。システム管理者は素通りするので気づかず、
+   一般ユーザーだけが中身の無い `403 Forbidden` を受ける（mtb はこの 403 に
+   ロールではなく Data API の設定を疑うよう添える）
 
 どれが欠けても `401 Invalid login` になり、区別は付かない。
 
@@ -810,8 +818,10 @@ MT は何もしないので、ファイルは古いままになる。実際に�
 | --- | --- | --- |
 | 401 Invalid login | サインインパスワードを使っている | Webサービスパスワードを確認する |
 | 401 が実行のたびに出る | セッションが切れている | `mtb auth login` をやり直す |
-| 403 | ユーザーの権限不足 | MT の管理画面でロールを見る |
-| 404（パスは合っている） | ベースURLが `mt-data-api.cgi` まで届いていない | `mtb profile show` で確認 |
+| 403（文面あり） | ユーザーの権限不足 | MT の管理画面でロールを見る。`Only a system administrator` はロールでは足りない |
+| 403 `Forbidden`（文面なし） | そのサイトの Data API が無効 | 下の「中身の無い 403」 |
+| 404 `Unknown endpoint` | ベースURLが `mt-data-api.cgi` まで届いていない／その MT に無いエンドポイント | `mtb profile show` で確認 |
+| 404（`Site not found` など文面あり） | エンドポイントはあり、対象が無い | ID・サイトの取り違えを見る |
 | 405 Method Not Allowed | 前段が PUT / DELETE を通していない | `--method-override` を付ける |
 | JSON でなく HTML が返る | ベースURLが管理画面を指している | 同上 |
 | 一覧が10件で切れる | `--limit` を指定していない | `--limit` と `totalResults` |
@@ -864,8 +874,9 @@ mtb extensions install ./mtb-plugin-pro   # 入れる（ディレクトリを写
 - **拡張ごとの使い方は `mtb llm` の「拡張: <名前>」の章にある。** 拡張のコマンドは
   コマンドカタログには載らないので、まずこの章を読む
 - **拡張は2つで1組。** mtb 側の拡張と、MT 側のプラグイン。片方だけでは動かない。
-  MT 側が無いと拡張のコマンドは **404** になり、エラーに「プラグインが入っていない
-  可能性」と `mtb extensions check` が添えられる。check は足りなければ終了コード 1
+  MT 側が無いと拡張のコマンドは **404 `Unknown endpoint`** になり、エラーに「プラグインが
+  入っていない可能性」と `mtb extensions check` が添えられる。プラグインが返す 404
+  （`File not found` など）には添えない（対象が無いだけ）。check は足りなければ終了コード 1
 - **「プラグイン」と「拡張」は別物。** `mtb plugins` は MT のプラグインを操作する
   生成コマンド、`mtb extensions` は mtb 自身の拡張の管理
 - 名前がぶつかる拡張は**丸ごと読み込まない**（警告が標準エラーに毎回出る）。

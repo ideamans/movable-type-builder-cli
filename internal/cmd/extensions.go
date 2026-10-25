@@ -157,7 +157,7 @@ func (a *App) newExtensionOperationCmd(e *extension.Extension, sc *spec.Command)
 	run := c.RunE
 	c.RunE = func(cmd *cobra.Command, args []string) error {
 		err := run(cmd, args)
-		if apiErr, ok := api.AsError(err); ok && apiErr.Status == http.StatusNotFound {
+		if apiErr, ok := api.AsError(err); ok && apiErr.UnknownEndpoint() {
 			return fmt.Errorf("%w\n%s", err, missingPluginHint(e))
 		}
 		return err
@@ -179,9 +179,10 @@ func extensionNote(e *extension.Extension) string {
 	return note
 }
 
-// missingPluginHint は拡張のコマンドが 404 を受けたときの助言です。
-// 拡張のエンドポイントは MT 本体に無いので、404 の多くは「MT 側に
-// プラグインが入っていない」ことを意味します。
+// missingPluginHint は拡張のコマンドが「Unknown endpoint」の 404 を受けたときの
+// 助言です。拡張のエンドポイントは MT 本体に無いので、それは「MT 側に
+// プラグインが入っていない」ことを意味します。プラグインが返す 404
+// （File not found など）には付けません（入っているのに疑わせることになる）。
 func missingPluginHint(e *extension.Extension) string {
 	if p := e.RequiredPlugin(); p != nil {
 		return fmt.Sprintf(i18n.T(
