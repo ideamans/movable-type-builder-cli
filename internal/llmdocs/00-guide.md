@@ -612,6 +612,8 @@ LDAP で同期するときの罠: 初期化で作った管理者に LDAP の `ex
 `LDAPGroupFilter` が無いとグループの検索が OU 自身を拾って作成に失敗するが、**API は success を返す**（MT のログにだけ残る）。
 **同期の応答の success は「同期が走った」で「変わった」ではない。** 結果は `users list` / `groups list` と MT のログで確かめる。
 手元で試す環境は `~/dev/mtb/mt-launcher`（配布 zip を Docker で起動。LDAP も付く）。
+**拡張 `mtb-pro` があれば、こうした罠を埋めたコマンドを使う**: `directory get`（設定の診断）・`directory synchronize`
+（変わったものと MT のログの失敗を返す）・`users bulk export`（UTF-8）・`users bulk import`（列を補い、行ごとの結果）。
 
 ```bash
 mtb endpoints list --fields id,verb,route
