@@ -75,7 +75,14 @@ func (e *Error) Hint() string {
 			return i18n.T(
 				"そのサイトの Data API が無効になっている可能性があります（新しく作ったサイトは無効で始まり、システム管理者だけが素通りします）。管理画面のサイトの設定「Webサービス」で有効にしてください（mtb-pro があれば mtb sites data-api update <サイトID> --enabled true）。有効なら、このユーザーのロールを確認してください。",
 				"The site's Data API may be disabled (new sites start disabled and only system administrators bypass it). Enable it in the site's Web Services settings in the admin screen (with mtb-pro: mtb sites data-api update <site-id> --enabled true). If it is enabled, check this user's role.")
-		case strings.Contains(e.Message, "system administrator"):
+		case strings.Contains(e.Message, "turned off"):
+			// サーバの設定でわざと閉じてある（mtb-pro の MtbPro の運用時の設定など）。
+			// 文面に「システム管理者が開けられる」とあっても、下の管理者の助言を出さない
+			// （管理者のプロファイルでも通らないのに、エージェントが持ち替えて遠回りする）
+			return i18n.T(
+				"サーバの設定でこの操作は止められています。権限の問題ではないので、プロファイルやロールを変えても通りません。開けるかどうかは MT の管理者が決めることなので、利用者に伝えてください。",
+				"The server has this operation turned off on purpose. It is not a permission problem: another profile or role will not get through. Whether to turn it on is the MT administrator's decision, so tell the user.")
+		case strings.Contains(e.Message, "Only a system administrator"):
 			return i18n.T(
 				"システム管理者だけができる操作です。ロールでは足りないので、システム管理者のプロファイルで実行してください。",
 				"Only a system administrator can do this; no role is enough. Run it with a system administrator's profile.")

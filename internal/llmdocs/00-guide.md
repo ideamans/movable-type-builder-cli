@@ -882,6 +882,7 @@ MT は何もしないので、ファイルは古いままになる。実際に�
 | `500 malformed JSON string` | `@ファイル名` が展開されず届いた | 文字列の項目では展開されない。警告が出ていないか見る |
 | コンテンツデータが `"Data Label" is required.` | label を書いていない | `label` はフィールドではなくデータ自体の名前 |
 | ページ作成時に folder を指定したのに root に出る | 作成時は無視される | 作ってから更新でフォルダを設定する |
+| 403 `turned off in the MtbPro plugin settings`（システム管理者なのに） | mtb-pro の MtbPro が運用時の設定でそのエンドポイントを閉じている | 権限の問題ではないので、プロファイルやロールを変えても通らない。Data API から開ける口は無い（わざと）。利用者に伝える。開いているものは `mtb endpoint-policy get` |
 | `users synchronize` / `groups synchronize` が 403（システム管理者なのに） | LDAP の外部ユーザー管理ではない | ロールでは直らない。`mt-config.cgi` の `AuthenticationModule LDAP` と `ExternalUserManagement 1` |
 | `users import` が「カラムの数が不正」 | `register` の行が13列でない | 後ろに空の列を足して13列にする |
 | `Unknown endpoint` / 見覚えのない `404` | そのMTに無い機能 | `mtb endpoints list` でサーバの実際の一覧を見る |
