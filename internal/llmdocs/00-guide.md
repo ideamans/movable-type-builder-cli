@@ -599,6 +599,20 @@ LDAP 連携まわりの4本が無いことがある（`users export` / `users im
 **`404 User not found`** になる。パスは合っているのに対象が無いと言われたら、
 まずサーバの実際の一覧を見る。
 
+**MTA（Movable Type Advanced）には Enterprise.pack が入っていて、4本とも生える**（MTA 9.3.0 で実測）。
+
+| コマンド | 罠 |
+| --- | --- |
+| `mtb users export --out users.csv` | **CSV は Shift_JIS**（日本語の環境）。行は `update,名前,新しい名前,表示名,メール,言語` で、そのまま取り込みに戻せる |
+| `mtb users import --file users.csv` | UTF-8 でよい。**`register` の行は13列ちょうど**（`register,名前,表示名,メール,言語,初期パスワード` ＋空の列7つ）。足りないと「カラムの数が不正」。`delete,名前` で削除。取り込んだ利用者には `sign_in_cms` と `sign_in_data_api` が付く |
+| `mtb users synchronize --yes` / `mtb groups synchronize --yes` | LDAP 認証で外部ユーザー（グループ）管理のときだけ動く。**そうでなければシステム管理者でも 403**（ロールの問題ではない） |
+
+LDAP で同期するときの罠: 初期化で作った管理者に LDAP の `external_id` が無いと、ユーザーの同期は
+「すべてのシステム管理者が無効にされる」で止まる。`LDAPUserSyncAttributes fullname,email` が無いと success を返して何も変わらない。
+`LDAPGroupFilter` が無いとグループの検索が OU 自身を拾って作成に失敗するが、**API は success を返す**（MT のログにだけ残る）。
+**同期の応答の success は「同期が走った」で「変わった」ではない。** 結果は `users list` / `groups list` と MT のログで確かめる。
+手元で試す環境は `~/dev/mtb/mt-launcher`（配布 zip を Docker で起動。LDAP も付く）。
+
 ```bash
 mtb endpoints list --fields id,verb,route
 ```
@@ -866,6 +880,8 @@ MT は何もしないので、ファイルは古いままになる。実際に�
 | `500 malformed JSON string` | `@ファイル名` が展開されず届いた | 文字列の項目では展開されない。警告が出ていないか見る |
 | コンテンツデータが `"Data Label" is required.` | label を書いていない | `label` はフィールドではなくデータ自体の名前 |
 | ページ作成時に folder を指定したのに root に出る | 作成時は無視される | 作ってから更新でフォルダを設定する |
+| `users synchronize` / `groups synchronize` が 403（システム管理者なのに） | LDAP の外部ユーザー管理ではない | ロールでは直らない。`mt-config.cgi` の `AuthenticationModule LDAP` と `ExternalUserManagement 1` |
+| `users import` が「カラムの数が不正」 | `register` の行が13列でない | 後ろに空の列を足して13列にする |
 | `Unknown endpoint` / 見覚えのない `404` | そのMTに無い機能 | `mtb endpoints list` でサーバの実際の一覧を見る |
 | ページにコメントできない | page リソースに `allowComments` が無い | サイト側の `allowCommentsDefault` を立ててから**ページを作る** |
 | メール送信系が 500 | `EmailAddressMain` 未設定 | MT の全般設定でシステムのメールアドレスを入れる |
