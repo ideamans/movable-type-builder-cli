@@ -611,7 +611,7 @@ LDAP で同期するときの罠: 初期化で作った管理者に LDAP の `ex
 「すべてのシステム管理者が無効にされる」で止まる。`LDAPUserSyncAttributes fullname,email` が無いと success を返して何も変わらない。
 `LDAPGroupFilter` が無いとグループの検索が OU 自身を拾って作成に失敗するが、**API は success を返す**（MT のログにだけ残る）。
 **同期の応答の success は「同期が走った」で「変わった」ではない。** 結果は `users list` / `groups list` と MT のログで確かめる。
-手元で試す環境は `~/dev/mtb/mt-launcher`（配布 zip を Docker で起動。LDAP も付く）。
+手元で試す環境は `~/dev/mtb/mtb-harness/mt-launcher`（配布 zip を Docker で起動。LDAP も付く）。
 **拡張 `mtb-pro` があれば、こうした罠を埋めたコマンドを使う**: `directory get`（設定の診断）・`directory synchronize`
 （変わったものと MT のログの失敗を返す）・`users bulk export`（UTF-8）・`users bulk import`（列を補い、行ごとの結果）。
 
@@ -846,6 +846,16 @@ MT は何もしないので、ファイルは古いままになる。実際に�
 ページのフォルダが外れて URL が変わった例がある。mtb は警告を出すが、
 送信は止めない。
 
+**ページは、空でなくても `folder` を書かない更新でフォルダから外れる**
+（MTA 9.3.0 で確かめた。`--set page.status=Publish` だけ、`page.title` だけでも
+`folder` が `null` になり、URL がサイト直下に移る）。basename が `index` のページだと、
+**公開した瞬間にサイトのトップページ（`/index.html`）を上書きする**（実際に起きた）。
+ページを更新するときは、毎回 `folder` を一緒に送る。
+
+```bash
+mtb sites pages update 1 7 --page '{"status":"Publish","folder":{"id":4}}' --publish 1 --verify-publish
+```
+
 ## 失敗モード
 
 | 症状 | 原因 | 対処 |
@@ -883,6 +893,8 @@ MT は何もしないので、ファイルは古いままになる。実際に�
 | `500 malformed JSON string` | `@ファイル名` が展開されず届いた | 文字列の項目では展開されない。警告が出ていないか見る |
 | コンテンツデータが `"Data Label" is required.` | label を書いていない | `label` はフィールドではなくデータ自体の名前 |
 | ページ作成時に folder を指定したのに root に出る | 作成時は無視される | 作ってから更新でフォルダを設定する |
+| ページの状態やタイトルを変えたら URL がサイト直下に移った・トップページが別のページになった | 更新で `folder` を送らないと、ページがフォルダから外れる（basename `index` ならトップの index.html を上書きする） | 更新のたびに `folder` を一緒に送る。上書きしたトップはインデックスのテンプレートを `mtb sites templates publish` で書き出し直す |
+| ページをフォルダの basename で選り分けたら、全部が「該当なし」になる | ページの一覧の `folder` は `id`・`label`・`parent` だけで、`basename` を持たない | `mtb sites folders list` で basename → id を引き、`folder.id` で比べる。**消す処理で間違えると自前のページまで消える** |
 | 403 `turned off in the MtbPro plugin settings`（システム管理者なのに） | mtb-pro の MtbPro が運用時の設定でそのエンドポイントを閉じている | 権限の問題ではないので、プロファイルやロールを変えても通らない。Data API から開ける口は無い（わざと）。利用者に伝える。開いているものは `mtb endpoint-policy get` |
 | `users synchronize` / `groups synchronize` が 403（システム管理者なのに） | LDAP の外部ユーザー管理ではない | ロールでは直らない。`mt-config.cgi` の `AuthenticationModule LDAP` と `ExternalUserManagement 1` |
 | `users import` が「カラムの数が不正」 | `register` の行が13列でない | 後ろに空の列を足して13列にする |

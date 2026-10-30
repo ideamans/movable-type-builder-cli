@@ -2,7 +2,7 @@
 name: mtb-usage
 description: Build and edit a Movable Type site with the mtb CLI (Movable Type Builder) — list, create and update entries and pages, upload assets in bulk, manage categories, custom fields, content types and templates, keep templates in Git, trigger rebuilds, and switch between several MT servers with named profiles. Use when someone asks about a Movable Type site, an MT entry or article, publishing or rebuilding an MT blog, or calling the Movable Type Data API.
 license: MIT
-compatibility: Requires the `mtb` binary on PATH — run the mtb-install skill if it is missing. Needs a configured profile and a login (`mtb auth login`), which asks for the MT user's *Web Services Password*. Writes to a live CMS: entries created or deleted here are real.
+compatibility: Requires the `mtb` binary on PATH — run the mtb-install skill if it is missing. Needs a configured profile and a login (`mtb auth login`), which asks for the MT user's *Web Services Password*. Writes to a live CMS — entries created or deleted here are real.
 allowed-tools: Bash(mtb:*) Bash(jq:*) Bash(command:*) Read Write
 ---
 
@@ -112,7 +112,15 @@ mtb sites entries update 1 42 --entry '{"title":"…"}'
 mtb assets upload --site-id 1 --file ./photo.jpg --path /2026
 ```
 
-Updates are partial: send only the fields that change.
+Updates are partial: send only the fields that change — **except a page's `folder`.**
+A page update that leaves out `folder` takes the page out of its folder, even when
+it only changes the status or the title: the URL moves to the site root, and a page
+whose basename is `index` overwrites the site's top page (`/index.html`) the moment
+it is published. Send the folder with every page update:
+
+```bash
+mtb sites pages update 1 7 --page '{"status":"Publish","folder":{"id":4}}' --publish 1 --verify-publish
+```
 
 **Never write back a body you read with a plain `get`.** What comes back is the
 *rendered* HTML, not the source. If the entry's `format` is `markdown`,
