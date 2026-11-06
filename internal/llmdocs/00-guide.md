@@ -898,6 +898,13 @@ mtb sites pages update 1 7 --page '{"status":"Publish","folder":{"id":4}}' --pub
 | ページ作成時に folder を指定したのに root に出る | 作成時は無視される | 作ってから更新でフォルダを設定する |
 | ページの状態やタイトルを変えたら URL がサイト直下に移った・トップページが別のページになった | 更新で `folder` を送らないと、ページがフォルダから外れる（basename `index` ならトップの index.html を上書きする） | 更新のたびに `folder` を一緒に送る。上書きしたトップはインデックスのテンプレートを `mtb sites templates publish` で書き出し直す |
 | ページをフォルダの basename で選り分けたら、全部が「該当なし」になる | ページの一覧の `folder` は `id`・`label`・`parent` だけで、`basename` を持たない | `mtb sites folders list` で basename → id を引き、`folder.id` で比べる。**消す処理で間違えると自前のページまで消える** |
+| コンテンツタイプのフィールドを作ったら 500（`Unexpected reference type in _macrowave`）。以後そのタイプの get・fields list・delete がすべて 500 | フィールドの `options` に JSON の真偽値（`"multiple": false` など）を入れた。サーバが壊れた形で保存する | `options` に真偽値を入れない（`required` はフィールド直下なので構わない）。壊れたタイプは `delete --yes` で消える（500 を返しても一覧からは消える）。作り直す |
+| コンテンツデータの URL の最後の段が 40 桁の英数字になった | `identifier` を送った。API の項目名は `basename` | `basename` に入れて作り直す（MT 9.3.1 で確認） |
+| ウェブページの本文が空 | 記事の癖で `text` を送った。ページの本文も `body` | `body` で更新し直す |
+| サイトを作っただけで `/index.html` `styles.css` `atom.xml` などが公開される。ページを作ると `/<basename>.html` も出る | `sites create` は既定のテーマ（MT 9.3 なら `eigerwand`）のテンプレートとサンプルのページを入れる | 自前のテンプレートで組むなら、既定のテンプレートとサンプルを消す。**書き出し済みのファイルは MT も mtb も消さない**ので、先に中身を空にして公開してから消すか、サーバ側で消してもらう（人の作業） |
+| テンプレートの公開が `403 Do not have permission to publish a template`（管理者なのに） | テンプレートが `<mt:Include module="…">` で、MT にまだ無いモジュールを読んでいる | 権限ではない。読んでいるモジュールを先に作る |
+| `<mt:Categories sort_by="user_custom">` がラベル順のまま（`permutate` は効いている） | MT 9.3.1 で観測。テンプレートのカテゴリの並びに、管理画面の並べ替えが効かなかった | 並びが大事なら、並べた順の固定の HTML にする（カテゴリを足したら作り直す）。API の `list --sort-by user_custom` は正しい順で返る |
+| 記事の個別ページの「ほかの記事」「次に読む」が、その記事より古いものだけになる | 記事アーカイブの中の `mt:Entries` は、既定でアーカイブの文脈（その記事より前）に絞られる | `ignore_archive_context="1"` を付ける |
 | 403 `turned off in the MtbPro plugin settings`（システム管理者なのに） | mtb-pro の MtbPro が運用時の設定でそのエンドポイントを閉じている | 権限の問題ではないので、プロファイルやロールを変えても通らない。Data API から開ける口は無い（わざと）。利用者に伝える。開いているものは `mtb endpoint-policy get` |
 | `users synchronize` / `groups synchronize` が 403（システム管理者なのに） | LDAP の外部ユーザー管理ではない | ロールでは直らない。`mt-config.cgi` の `AuthenticationModule LDAP` と `ExternalUserManagement 1` |
 | `users import` が「カラムの数が不正」 | `register` の行が13列でない | 後ろに空の列を足して13列にする |
