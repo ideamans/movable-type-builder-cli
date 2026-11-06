@@ -41,7 +41,8 @@ func (a *App) newAuthLoginCmd() *cobra.Command {
 		Long: i18n.T(
 			"ユーザー名とパスワードで認証し、セッションIDとアクセストークンを保存します。\n\n"+
 				"パスワードは MT の「Webサービスパスワード」です。サインイン用の\n"+
-				"パスワードとは別物で、MT のユーザー設定画面で確認・変更できます。\n\n"+
+				"パスワードとは別物で、MT のユーザー情報の編集画面で発行します（MT 9 では\n"+
+				"発行したときにしか表示されません。分からなくなったら削除して発行し直します）。\n\n"+
 				"パスワードは保存しません。保存するのはセッションIDとアクセストークンで、\n"+
 				"アクセストークンが切れたらセッションIDから自動で取り直します。\n\n"+
 				"対話できない環境では --username と --password-stdin を使ってください。\n\n"+
@@ -51,8 +52,9 @@ func (a *App) newAuthLoginCmd() *cobra.Command {
 				"プロセス一覧に残るので、他に手が無いときだけにしてください。",
 			"Authenticate with a username and password, then store the session ID and access token.\n\n"+
 				"The password is the MT Web Services Password. It is separate from the\n"+
-				"password you sign in to MT with, and you can view or change it on your\n"+
-				"user profile screen in MT.\n\n"+
+				"password you sign in to MT with, and is issued on your user profile screen\n"+
+				"in MT (MT 9 shows it only once, when issued; if it is lost, delete it and\n"+
+				"issue a new one).\n\n"+
 				"The password itself is never stored. What is stored is the session ID and\n"+
 				"the access token; when the access token expires it is renewed automatically\n"+
 				"from the session ID.\n\n"+
