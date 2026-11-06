@@ -77,7 +77,7 @@ mtb sites entries list --fields id,title,status --limit 50
 
 ```bash
 mtb sites entries create --site-id 1 --entry @entry.json --fields id --compact
-# => {"id":"42"}
+# => {"id":42}
 ```
 
 **11. MT に書き込む作業の前に、`MTB_AUDIT_NOTE` に作業の説明を入れる。**
