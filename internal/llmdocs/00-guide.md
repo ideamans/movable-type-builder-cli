@@ -910,6 +910,7 @@ mtb sites pages update 1 7 --page '{"status":"Publish","folder":{"id":4}}' --pub
 | 記事を取り下げた（原稿に戻した）・削除したのに、カテゴリの一覧に残る | カテゴリアーカイブは、取り下げや削除では書き出し直されない | そのブログを再構築する（`mtb publish` か、管理画面の［再構築］→「すべてのファイル」） |
 | `roles create` / `roles update` が通ったのに、ロールに権限が付いていない | 知らない権限名は**エラーにならず黙って捨てられる**。`permissions list` は権限名の一覧ではない | ロールは必ず `roles get` で読み戻して確かめる。コンテンツタイプ単位の権限は `manage_content_data:<タイプのUUID>`（スキル mt-cms-design の permissions.md） |
 | コンテンツタイプの「タグ」の欄に値を入れると 409「コンテンツデータとタグのリンクを作成できません」、タグを先に作って渡すと 500 | MT 9.3.1 で観測。API からはタグの欄に値を入れられなかった（500 の前にデータが途中まで保存されることもある） | 「リスト」の欄で代える。途中まで保存されたデータは消して入れ直す |
+| 403 で、メッセージが `mt-config.cgi` の設定を足せと言っている（`File upload is disabled. Add "MtbProAllowFileUpload 1" …` など） | MT のサーバの設定で無効 | 権限の問題ではない。ロールやプロファイルを変えても通らない。サーバの管理者（利用者）に伝える |
 | 403 `turned off in the MtbPro plugin settings`（システム管理者なのに） | mtb-pro の MtbPro が運用時の設定でそのエンドポイントを閉じている | 権限の問題ではないので、プロファイルやロールを変えても通らない。Data API から開ける口は無い（わざと）。利用者に伝える。開いているものは `mtb endpoint-policy get` |
 | `users synchronize` / `groups synchronize` が 403（システム管理者なのに） | LDAP の外部ユーザー管理ではない | ロールでは直らない。`mt-config.cgi` の `AuthenticationModule LDAP` と `ExternalUserManagement 1` |
 | `users import` が「カラムの数が不正」 | `register` の行が13列でない | 後ろに空の列を足して13列にする |

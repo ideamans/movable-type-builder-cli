@@ -82,6 +82,12 @@ func (e *Error) Hint() string {
 			return i18n.T(
 				"サーバの設定でこの操作は止められています。権限の問題ではないので、プロファイルやロールを変えても通りません。開けるかどうかは MT の管理者が決めることなので、利用者に伝えてください。",
 				"The server has this operation turned off on purpose. It is not a permission problem: another profile or role will not get through. Whether to turn it on is the MT administrator's decision, so tell the user.")
+		case strings.Contains(e.Message, "mt-config.cgi"):
+			// MT の設定で無効になっている（mtb-pro の MtbPro のファイル送信 MtbProAllowFileUpload など）。
+			// 文面がどの設定かを言っているので、ロールの助言を出さない（見当違いの方へ行かせない）
+			return i18n.T(
+				"MT のサーバの設定（mt-config.cgi）で無効になっています。権限の問題ではありません。メッセージにある設定を足せるのは MT のサーバの管理者なので、利用者に伝えてください。",
+				"It is disabled in the MT server's configuration (mt-config.cgi). It is not a permission problem. Only the MT server's administrator can add the setting named in the message, so tell the user.")
 		case strings.Contains(e.Message, "Only a system administrator"):
 			return i18n.T(
 				"システム管理者だけができる操作です。ロールでは足りないので、システム管理者のプロファイルで実行してください。",
