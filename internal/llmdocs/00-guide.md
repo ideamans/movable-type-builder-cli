@@ -905,6 +905,9 @@ mtb sites pages update 1 7 --page '{"status":"Publish","folder":{"id":4}}' --pub
 | テンプレートの公開が `403 Do not have permission to publish a template`（管理者なのに） | テンプレートが `<mt:Include module="…">` で、MT にまだ無いモジュールを読んでいる | 権限ではない。読んでいるモジュールを先に作る |
 | `<mt:Categories sort_by="user_custom">` がラベル順のまま（`permutate` は効いている） | MT 9.3.1 で観測。テンプレートのカテゴリの並びに、管理画面の並べ替えが効かなかった | 並びが大事なら、並べた順の固定の HTML にする（カテゴリを足したら作り直す）。API の `list --sort-by user_custom` は正しい順で返る |
 | 記事の個別ページの「ほかの記事」「次に読む」が、その記事より古いものだけになる | 記事アーカイブの中の `mt:Entries` は、既定でアーカイブの文脈（その記事より前）に絞られる | `ignore_archive_context="1"` を付ける |
+| 管理画面で画像を入れた記事だけ、公開ページで画像が出ず HTML（`…webp</a></span>`）が漏れる | 画像のカスタムフィールドの値は、API で入れると URL の文字列、管理画面で入れると `<form mt:asset-id="…">…</form>` の HTML になる。API で入れた原稿だけで確かめると気づかない | テンプレートは両方を受ける（アセットのブロックで取れればその URL、だめなら生の値）。**構築の確認は、管理画面で1本作って公開するところまでする** |
+| 記事を公開しても、ウェブサイトのトップやサイトマップに出ない | `include_blogs` で他のブログの記事を読むインデックスは、記事を保存したブログの外にあるので、自動では再構築されない | 公開のあとに `mtb sites templates publish` でそのインデックスを書き出す（cron で回すなど、運用で決める）。管理画面の再構築トリガーで連動できる可能性はある（未確認） |
+| 記事を取り下げた（原稿に戻した）・削除したのに、カテゴリの一覧に残る | カテゴリアーカイブは、取り下げや削除では書き出し直されない | そのブログを再構築する（`mtb publish` か、管理画面の［再構築］→「すべてのファイル」） |
 | 403 `turned off in the MtbPro plugin settings`（システム管理者なのに） | mtb-pro の MtbPro が運用時の設定でそのエンドポイントを閉じている | 権限の問題ではないので、プロファイルやロールを変えても通らない。Data API から開ける口は無い（わざと）。利用者に伝える。開いているものは `mtb endpoint-policy get` |
 | `users synchronize` / `groups synchronize` が 403（システム管理者なのに） | LDAP の外部ユーザー管理ではない | ロールでは直らない。`mt-config.cgi` の `AuthenticationModule LDAP` と `ExternalUserManagement 1` |
 | `users import` が「カラムの数が不正」 | `register` の行が13列でない | 後ろに空の列を足して13列にする |
