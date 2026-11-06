@@ -13,8 +13,10 @@
 
 ## Registering in the marketplace (first release only)
 
-The repository is private, so the entry goes in
-`ideamans/claude-private-plugins`, not the public marketplace.
+The repository is public, so the entry goes in the public marketplace
+`ideamans/claude-public-plugins` (marketplace name `ideamans-plugins`).
+It used to be in `ideamans/claude-private-plugins` while the repository was
+private; that entry was removed when the repository went public (2026-11-06).
 
 ```json
 {
@@ -30,8 +32,8 @@ The repository is private, so the entry goes in
 ## Verifying the published result
 
 ```
-/plugin marketplace add ideamans/claude-private-plugins
-/plugin install movable-type-builder-cli@ideamans-private-plugins
+/plugin marketplace add ideamans/claude-public-plugins
+/plugin install movable-type-builder-cli@ideamans-plugins
 /mtb-usage
 ```
 
@@ -52,4 +54,11 @@ The repository is private, so the entry goes in
 gh skill install ideamans/movable-type-builder-cli/plugins/movable-type-builder-cli/skills/mtb-usage --agent copilot
 ```
 
-Both routes need a `gh` login with read access to the private repository.
+Neither route needs a GitHub login.
+
+## The binary
+
+GitHub Releases (goreleaser, on a `v*` tag) is the source. bin.ideamans.com
+(category `mtb`, key `mtb`) syncs it every 10 minutes and serves the install
+script that `mtb-install` and the README use:
+`curl -fsSL https://bin.ideamans.com/install/mtb.sh | bash`.

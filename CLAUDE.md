@@ -5,9 +5,10 @@ Movable Type のサイトを組み立てる CLI（Movable Type Builder CLI）。
 リリースアーカイブ名は `movable-type-builder-cli`。main パッケージは
 `cmd/mtb` にあるので `go install .../cmd/mtb@latest` は `mtb` を作る）。
 
-**リポジトリは private。** context7 は使えないので、`internal/llmdocs/00-guide.md`
-を厚くして `mtb llm` 一本で完結させている。プラグインの登録先も
-`ideamans/claude-private-plugins`。
+**リポジトリは public（MIT。2026-11-06 に公開）。** 配布はバイナリが GitHub Releases と
+bin.ideamans.com（カテゴリ `mtb`。インストールスクリプト `install/mtb.sh`）、
+プラグインが `ideamans/claude-public-plugins`。エージェント向けの資料は
+`internal/llmdocs/00-guide.md` を厚くして `mtb llm` 一本で完結させている。
 
 実在の MT サイトの記事・ページ・テンプレートを書き換える。DELETE は取り消せない。
 

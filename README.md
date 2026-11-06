@@ -21,25 +21,22 @@ mtb sites entries list --site-id 1 --status Publish --limit 20
 
 ## インストール
 
-リポジトリが private のため、リリースの取得には `gh` の認証が要ります。
-
 ```bash
-OS=$(uname -s | tr '[:upper:]' '[:lower:]')
-ARCH=$(uname -m); [ "$ARCH" = "x86_64" ] && ARCH=amd64
-
-gh release download --repo ideamans/movable-type-builder-cli \
-  --pattern "*_${OS}_${ARCH}.tar.gz" --dir /tmp --clobber
-tar -xzf /tmp/movable-type-builder-cli_*_${OS}_${ARCH}.tar.gz -C /tmp
-mkdir -p ~/.local/bin && mv /tmp/mtb ~/.local/bin/
+curl -fsSL https://bin.ideamans.com/install/mtb.sh | bash
 ```
 
-**アーカイブ名はリポジトリ名、中のバイナリは `mtb`** です。
+既定の置き場所は `/usr/local/bin`（`sudo` を求められます）。ホームに置くなら
+`| bash -s -- --install-dir ~/.local/bin`。Windows は PowerShell で
+`irm https://bin.ideamans.com/install/mtb.ps1 | iex`。apt・yum・Scoop・Chocolatey は
+<https://bin.ideamans.com/mtb/mtb> にあります。
+
+[GitHub のリリース](https://github.com/ideamans/movable-type-builder-cli/releases)から
+取ることもできます。**アーカイブ名はリポジトリ名、中のバイナリは `mtb`** です。
 
 ソースから入れる場合（main パッケージはモジュール直下ではありません）:
 
 ```bash
-GOPRIVATE=github.com/ideamans/* \
-  go install github.com/ideamans/movable-type-builder-cli/cmd/mtb@latest
+go install github.com/ideamans/movable-type-builder-cli/cmd/mtb@latest
 ```
 
 ## 接続先（プロファイル）
@@ -568,8 +565,8 @@ Claude Code ではプラグインを導入すると6つのスキルが使えま�
 書かず `references/` に置いてあり、必要なものだけを開く形にしています。
 
 ```
-/plugin marketplace add ideamans/claude-private-plugins
-/plugin install movable-type-builder-cli@ideamans-private-plugins
+/plugin marketplace add ideamans/claude-public-plugins
+/plugin install movable-type-builder-cli@ideamans-plugins
 ```
 
 同じスキルは Copilot や Cursor など Agent Skills 対応ホストでも使えます。
